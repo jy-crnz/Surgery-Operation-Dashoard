@@ -59,10 +59,9 @@ function loadDashboard(customCSV = null) {
     renderDashboard();
 }
 
-// 3. FILTER LOGIC (CRASH PROOF UPDATE)
+// 3. POPULATE FILTER DROPDOWN
 function populateFilter() {
     const filterSelect = document.getElementById('surgeon-filter');
-    // Safety Check: If filter dropdown is missing, stop here
     if (!filterSelect) return; 
 
     const currentSelection = filterSelect.value;
@@ -81,21 +80,51 @@ function populateFilter() {
     }
 }
 
-// SAFETY CHECK FOR EVENT LISTENER
-const filterDropdown = document.getElementById('surgeon-filter');
-if (filterDropdown) {
-    filterDropdown.addEventListener('change', (e) => {
-        const selected = e.target.value;
-        if (selected === 'all') {
-            currentData = [...allData];
-        } else {
-            currentData = allData.filter(d => d.surgeon === selected);
-        }
-        renderDashboard();
-    });
+// 4. UNIFIED FILTER LOGIC (The "Master" Filter)
+function applyFilters() {
+    const surgeonSelect = document.getElementById('surgeon-filter');
+    const searchInput = document.getElementById('search-input');
+    
+    // Safety checks
+    if (!surgeonSelect) return; 
+
+    const selectedSurgeon = surgeonSelect.value;
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
+
+    // A. Start with ALL data
+    let result = allData;
+
+    // B. Apply Surgeon Filter
+    if (selectedSurgeon !== 'all') {
+        result = result.filter(item => item.surgeon === selectedSurgeon);
+    }
+
+    // C. Apply Search Filter
+    if (searchTerm) {
+        result = result.filter(item => 
+            item.procedure.toLowerCase().includes(searchTerm) || 
+            item.surgeon.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    // D. Update State & Render
+    currentData = result;
+    renderDashboard();
 }
 
-// 4. SORT LOGIC
+// EVENT LISTENERS (Connected to the unified logic)
+const filterDropdown = document.getElementById('surgeon-filter');
+const searchBox = document.getElementById('search-input');
+
+if (filterDropdown) {
+    filterDropdown.addEventListener('change', applyFilters);
+}
+
+if (searchBox) {
+    searchBox.addEventListener('input', applyFilters);
+}
+
+// 5. SORT LOGIC
 function handleSort(key) {
     sortDirection *= -1; 
     currentData.sort((a, b) => {
@@ -110,12 +139,27 @@ function handleSort(key) {
     renderDashboard();
 }
 
-// 5. RENDER DASHBOARD
+// 6. RENDER DASHBOARD
 function renderDashboard() {
     let totalDur = 0, totalTurn = 0, count = 0;
     const tableBody = document.getElementById('table-body');
-    if (!tableBody) return; // Safety check
+    if (!tableBody) return; 
     tableBody.innerHTML = '';
+
+    // Handle Empty Results
+    if (currentData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color:#64748b;">No records found.</td></tr>';
+        
+        // Clear stats to 0
+        document.getElementById('total-cases').innerText = "0";
+        document.getElementById('avg-duration').innerText = "--";
+        document.getElementById('avg-turnover').innerText = "--";
+        
+        // Clear charts
+        if (myBarChart) { myBarChart.destroy(); myBarChart = null; }
+        if (myPieChart) { myPieChart.destroy(); myPieChart = null; }
+        return;
+    }
 
     currentData.forEach(item => {
         if(item.duration > 0) {
@@ -161,9 +205,8 @@ function renderDashboard() {
     renderCharts(currentData);
 }
 
-// 6. CHART RENDERING
+// 7. CHART RENDERING
 function renderCharts(data) {
-    // Check if canvas elements exist before drawing
     const ctxBarEl = document.getElementById('surgeonChart');
     const ctxPieEl = document.getElementById('procedureChart');
 
@@ -189,7 +232,12 @@ function renderCharts(data) {
                     borderRadius: 4
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { display: false } } // Hide redundant legend
+            }
         });
     }
 
@@ -226,7 +274,7 @@ function renderCharts(data) {
     }
 }
 
-// 7. FILE UPLOAD LISTENER (CRASH PROOF)
+// 8. FILE UPLOAD LISTENER
 const uploadInput = document.getElementById('csv-upload');
 if (uploadInput) {
     uploadInput.addEventListener('change', (e) => {
@@ -236,8 +284,6 @@ if (uploadInput) {
         reader.onload = (e) => loadDashboard(e.target.result);
         reader.readAsText(file);
     });
-} else {
-    console.error("ERROR: Could not find 'csv-upload' input. Check your HTML ID.");
 }
 
 // START

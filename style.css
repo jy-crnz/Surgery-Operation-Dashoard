@@ -1,3 +1,6 @@
+/* =========================================
+   1. GLOBAL RESET & VARIABLES
+   ========================================= */
 :root {
     --primary: #2563eb;       
     --primary-dark: #1e40af;
@@ -6,8 +9,13 @@
     --danger: #ef4444;        
     --background: #f1f5f9;    
     --card-bg: #ffffff;
-    --text-main: #0f172a;     /* Darker text for better contrast */
+    --text-main: #0f172a;
     --border: #e2e8f0;
+}
+
+/* CRITICAL FIX: Ensures padding doesn't break element widths */
+* {
+    box-sizing: border-box; 
 }
 
 body {
@@ -16,34 +24,52 @@ body {
     color: var(--text-main);
     margin: 0;
     padding: 0; 
+    overflow-x: hidden; /* Prevents side-scrolling on the body */
 }
 
-/* HERO SECTION */
+/* =========================================
+   2. HERO SECTION (Responsive Header)
+   ========================================= */
 .hero-section {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
     padding: 30px 20px;
     margin-bottom: 30px;
-    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1); /* Soft Blue Shadow */
+    width: 100%;             /* Force full width */
+    display: flex;           
+    justify-content: center; /* Centers the content wrapper */
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
 }
 
 .hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;       /* Max width for large screens */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap;         /* Allows items to wrap on smaller screens */
     gap: 20px;
 }
+
+.hero-content div:first-child {
+    flex: 1;                 /* Allows Title to take available space */
+    min-width: 280px;        /* Prevents title from getting crushed */
+}
+
 .hero-content h1 { margin: 0 0 8px 0; font-size: 1.8rem; letter-spacing: -0.5px; }
 .hero-content p { margin: 0; color: #e0e7ff; font-size: 1rem; }
 
-/* Controls */
-.controls-container { display: flex; gap: 15px; align-items: center; }
+/* CONTROLS (Inputs Container) */
+.controls-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;         /* Allows buttons to stack if needed */
+}
 
-/* Filter Dropdown */
-.filter-dropdown {
+/* INPUTS & BUTTONS */
+.filter-dropdown, 
+.search-box {
     padding: 12px 20px;
     border-radius: 8px;
     border: 2px solid #cbd5e1;
@@ -51,76 +77,66 @@ body {
     color: #1e293b;
     font-size: 0.95rem;
     font-weight: 600;
-    cursor: pointer;
-    min-width: 180px;
+    min-width: 200px;
+    height: 48px;            /* Fixed height for alignment */
     outline: none;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: all 0.2s;
 }
-.filter-dropdown:hover { border-color: var(--primary); box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); }
 
-/* Upload Button */
+.upload-wrapper {
+    display: flex;
+}
+
 .upload-btn {
     background: white;
     color: var(--primary);
-    padding: 10px 20px;
+    padding: 0 20px;
+    height: 48px;            /* Match height of inputs */
     border-radius: 8px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    white-space: nowrap; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.2s;
 }
-.upload-btn:hover { background: #f8fafc; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+
+.upload-btn:hover { background: #f8fafc; transform: translateY(-2px); }
 #csv-upload { display: none; }
 
-/* GRID LAYOUT */
+/* =========================================
+   3. MAIN DASHBOARD GRID
+   ========================================= */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px 40px 20px;
     display: grid;
     gap: 24px;
-    grid-template-areas: "stat1 stat2 stat3" "chart1 chart1 chart2" "table table table";
+    /* DESKTOP LAYOUT (Default: 3 Columns) */
+    grid-template-areas: 
+        "stat1 stat2 stat3"
+        "chart1 chart1 chart2"
+        "table table table";
     grid-template-columns: 1fr 1fr 1fr;
 }
-@media (max-width: 900px) {
-    .container {
-        grid-template-areas: "stat1" "stat2" "stat3" "chart1" "chart2" "table";
-        grid-template-columns: 1fr;
-    }
-}
 
-/* SEARCH BOX STYLE */
-.search-box {
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: 2px solid #cbd5e1;
-    font-size: 0.95rem;
-    outline: none;
-    min-width: 200px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-.search-box:focus {
-    border-color: #2563eb; /* Blue border when typing */
-}
-
-/* CARDS WITH ICONS */
+/* =========================================
+   4. CARDS & CHARTS
+   ========================================= */
 .card {
     background: var(--card-bg);
-    border-radius: 16px; /* Softer rounded corners */
+    border-radius: 16px;
     padding: 24px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--border);
-    transition: transform 0.2s ease-in-out;
 }
-.card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 
-/* Specific Stat Card Layout */
 .stat-card {
     display: flex;
-    justify-content: space-between; /* Pushes text left, icon right */
+    justify-content: space-between;
     align-items: flex-start;
 }
 .stat-card:nth-of-type(1) { grid-area: stat1; border-left: 5px solid var(--danger); }
@@ -135,47 +151,115 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.8;
+    flex-shrink: 0;
 }
 .red-icon { background: #fee2e2; color: #dc2626; }
 .blue-icon { background: #dbeafe; color: #2563eb; }
 .green-icon { background: #d1fae5; color: #059669; }
 
 /* Typography */
-h2, h3 { margin-top: 0; font-size: 0.85rem; color: var(--secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; }
-.big-number { font-size: 2.2rem; font-weight: 700; color: var(--text-main); margin: 5px 0 10px 0; }
+h2, h3 { margin-top: 0; font-size: 0.85rem; color: var(--secondary); text-transform: uppercase; font-weight: 700; }
+.big-number { font-size: 2.2rem; font-weight: 700; color: var(--text-main); margin: 5px 0 10px 0; word-break: break-all; }
 
-.status-badge {
-    display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
-}
+.status-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
 .green { background: #ecfdf5; color: #047857; }
 .red { background: #fef2f2; color: #b91c1c; }
 .blue { background: #eff6ff; color: #1d4ed8; }
 .gray { background: #f8fafc; color: #64748b; }
 
-/* Charts */
 .chart-section { grid-area: chart1; }
 .chart-donut { grid-area: chart2; }
 .chart-container { position: relative; height: 300px; width: 100%; }
 
-/* TABLE DESIGN */
-.data-section { grid-area: table; padding: 0; overflow: hidden; } /* Remove padding for flush table */
-.data-section h2 { padding: 24px 24px 0 24px; } /* Add header padding back */
+/* =========================================
+   5. DATA TABLE
+   ========================================= */
+.data-section { grid-area: table; padding: 0; overflow: hidden; } 
+.data-section h2 { padding: 24px 24px 0 24px; }
 
-.table-wrapper { overflow-x: auto; width: 100%; margin-top: 20px; }
+/* TABLE SCROLL WRAPPER (Critical for Mobile) */
+.table-wrapper { 
+    overflow-x: auto; 
+    width: 100%; 
+    margin-top: 20px;
+    -webkit-overflow-scrolling: touch; 
+}
 
 table { width: 100%; border-collapse: collapse; min-width: 600px; }
-
-th { 
-    background: #f8fafc; color: var(--secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;
-    padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s;
-}
+th { background: #f8fafc; color: var(--secondary); font-weight: 600; padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--border); cursor: pointer; }
 th:hover { background: #e2e8f0; color: var(--text-main); }
-
-td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 0.95rem; color: var(--text-main); }
-
-/* Zebra Striping & Hover */
+td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
 tbody tr:nth-child(even) { background-color: #f8fafc; }
-tbody tr:hover { background-color: #f1f5f9; transition: background-color 0.1s; }
+.high-alert { color: #dc2626; font-weight: 700; }
 
-.high-alert { color: #dc2626; font-weight: 700; background: transparent; padding: 16px 24px; }
+/* =========================================
+   6. RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* TABLET VIEW (900px and below) */
+@media (max-width: 900px) {
+    .container {
+        /* Switch to 2 Columns */
+        grid-template-areas: 
+            "stat1 stat2"
+            "stat3 stat3"
+            "chart1 chart1"
+            "chart2 chart2"
+            "table table";
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* MOBILE VIEW (768px and below) */
+@media (max-width: 768px) {
+    
+    /* 1. RESET HERO LAYOUT */
+    .hero-section { padding: 20px 15px; }
+    
+    .hero-content {
+        flex-direction: column; /* Stack Title on top */
+        align-items: stretch;   /* Stretch all children to full width */
+        text-align: center;
+    }
+
+    .hero-content div:first-child {
+        margin-bottom: 15px;    /* Space below title */
+    }
+
+    /* 2. STACK CONTROLS */
+    .controls-container {
+        flex-direction: column; 
+        width: 100%;
+        gap: 12px;
+    }
+
+    /* 3. FORCE FULL WIDTH INPUTS */
+    .filter-dropdown, 
+    .search-box, 
+    .upload-wrapper, 
+    .upload-btn {
+        width: 100% !important; /* Force stretch */
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+
+    /* 4. SINGLE COLUMN GRID */
+    .container {
+        grid-template-areas: 
+            "stat1" "stat2" "stat3"
+            "chart1" "chart2"
+            "table";
+        grid-template-columns: 1fr;
+        padding: 15px;
+        gap: 16px;
+    }
+
+    /* Adjust sizing */
+    .big-number { font-size: 1.8rem; }
+    .chart-container { height: 250px; }
+    
+    /* Ensure table fits */
+    .data-section { border-radius: 0; margin: 0 -15px; width: calc(100% + 30px); }
+    th, td { padding: 12px 15px; }
+}

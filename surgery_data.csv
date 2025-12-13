@@ -1,0 +1,201 @@
+Procedure,Surgeon,Duration,Turnover
+"Partial ostectomy, fifth metatarsal head",Dr. Altman,93,45
+"Neurectomy, intrinsic musculature of foot",Dr. Smith,48,20
+Lapidus bunionectomy,Dr. Karev,22,45
+Bunionectomy with distal osteotomy,Dr. Jones,57,35
+"Arthroplasty, knee, hinge prothesis",Dr. House,108,47
+"Arthroplasty, knee, hinge prothesis",Dr. Jones,94,32
+Extracapsular cataract removal,Dr. Grey,18,32
+Extracapsular cataract removal,Dr. Torres,18,20
+Extracapsular cataract removal,Dr. Doe,15,20
+Extracapsular cataract removal,Dr. Shepherd,14,44
+Extracapsular cataract removal,Dr. Torres,14,37
+Extracapsular cataract removal,Dr. Doe,20,43
+Extracapsular cataract removal,Dr. Ray,14,33
+Extracapsular cataract removal,Dr. Doe,18,42
+"Hysterectomy, surgical",Dr. House,77,46
+Cervical biopsy,Dr. Ray,35,24
+"Hysterectomy, surgical",Dr. Smith,77,44
+Cervical biopsy,Dr. Karev,32,20
+Vasectomy,Dr. Smith,39,22
+Cryosurgery of the prostate gland,Dr. Ray,66,24
+Cystourethroscopy,Dr. Strange,28,21
+Vasectomy,Dr. Strange,28,21
+Liposuction,Dr. Smith,108,35
+Liposuction,Dr. Smith,136,48
+Rhinoplasty,Dr. Strange,72,28
+"Digital amputation, metatarsophalangeal joint",Dr. Ray,30,33
+"Digital amputation, metatarsophalangeal joint",Dr. Torres,36,32
+AV fistula,Dr. Grey,52,49
+AV fistula,Dr. Shepherd,58,22
+AV fistula,Dr. Shepherd,50,44
+Sleeve gastrectomy,Dr. Strange,100,26
+Sleeve gastrectomy,Dr. Smith,92,24
+Laparoscopic cholecystectomy,Dr. Shepherd,48,35
+Bunionectomy with distal osteotomy,Dr. Smith,97,46
+Hallux rigidus correction with cheilectomy,Dr. Doe,42,35
+Bunionectomy with distal osteotomy,Dr. Doe,90,36
+"Arthroscopy, knee, surgical",Dr. Smith,30,47
+"Arthroscopy, knee, surgical",Dr. Altman,36,47
+"Arthroscopy, knee, surgical",Dr. Ray,36,20
+"Arthroscopy, knee, surgical",Dr. Karev,40,21
+"Arthroscopy, knee, surgical",Dr. Ray,31,21
+Extracapsular cataract removal,Dr. Strange,18,31
+Extracapsular cataract removal,Dr. House,18,43
+Extracapsular cataract removal,Dr. Ray,15,29
+Extracapsular cataract removal,Dr. Ray,14,36
+Extracapsular cataract removal,Dr. Grey,14,33
+Extracapsular cataract removal,Dr. Ray,20,34
+Extracapsular cataract removal,Dr. Doe,14,37
+Extracapsular cataract removal,Dr. House,18,22
+"Hysterectomy, surgical",Dr. Torres,77,26
+Cervical biopsy,Dr. Yang,35,22
+"Hysterectomy, surgical",Dr. Doe,77,30
+Cervical biopsy,Dr. Sloan,32,38
+Tonsillectomy,Dr. Yang,25,41
+Septoplasty,Dr. Sloan,52,22
+Septoplasty,Dr. Strange,53,46
+Tonsillectomy,Dr. Yang,32,35
+Tonsillectomy,Dr. Shepherd,32,33
+Removal of benign skin lesion,Dr. Grey,34,20
+Removal of benign skin lesion,Dr. Smith,26,35
+Removal of benign skin lesion,Dr. House,38,24
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Ray,105,29
+"Tympanostomy, general anesthesia",Dr. Altman,30,37
+"Tympanostomy, general anesthesia",Dr. Doe,34,22
+"Tympanostomy, general anesthesia",Dr. House,32,44
+"Myringotomy, general anesthesia",Dr. Sloan,28,26
+"Myringotomy, general anesthesia",Dr. Karev,27,40
+"Arthroplasty, knee, hinge prothesis",Dr. Torres,81,35
+"Arthroplasty, knee, hinge prothesis",Dr. Altman,85,38
+"Arthroplasty, hip",Dr. Jones,88,49
+Plantar fasciotomy,Dr. Doe,37,29
+Plantar fasciotomy,Dr. Sloan,32,26
+"Correction, hammertoe",Dr. Sloan,40,38
+"Correction, hammertoe",Dr. Yang,50,42
+"Carpal tunnel release, open",Dr. Karev,37,21
+"Carpal tunnel release, open",Dr. Sloan,34,20
+"Fasciotomy, palmar, open",Dr. Strange,56,42
+"ORIF, phalangeal shaft fracture",Dr. Strange,84,47
+Flexor tendon repair,Dr. Torres,47,41
+"Tympanostomy, general anesthesia",Dr. Karev,30,22
+"Tympanostomy, general anesthesia",Dr. Shepherd,34,35
+"Tympanostomy, general anesthesia",Dr. Torres,32,27
+"Myringotomy, general anesthesia",Dr. Karev,28,26
+"Myringotomy, general anesthesia",Dr. Doe,27,39
+Vasectomy,Dr. Doe,39,29
+Cryosurgery of the prostate gland,Dr. Jones,66,27
+Cystourethroscopy,Dr. Doe,20,33
+Vasectomy,Dr. Shepherd,30,45
+Cystourethroscopy,Dr. Torres,22,35
+Tonsillectomy,Dr. Bailey,28,27
+Tonsillectomy,Dr. House,27,24
+Tonsillectomy,Dr. Sloan,24,35
+Tonsillectomy,Dr. House,30,42
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Karev,68,31
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Smith,55,37
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Strange,71,28
+"Digital amputation, metatarsophalangeal joint",Dr. Jones,30,29
+"Digital amputation, metatarsophalangeal joint",Dr. Smith,36,22
+AV fistula,Dr. Strange,52,30
+AV fistula,Dr. House,58,27
+Sleeve gastrectomy,Dr. Doe,100,45
+Sleeve gastrectomy,Dr. Jones,92,43
+Laparoscopic cholecystectomy,Dr. Sloan,48,42
+"Partial ostectomy, fifth metatarsal head",Dr. Bailey,93,28
+"Neurectomy, intrinsic musculature of foot",Dr. Doe,48,24
+Lapidus bunionectomy,Dr. Smith,22,49
+Bunionectomy with distal osteotomy,Dr. Ray,57,31
+"Arthroplasty, knee, hinge prothesis",Dr. Torres,108,33
+"Arthroplasty, knee, hinge prothesis",Dr. Sloan,94,33
+Extracapsular cataract removal,Dr. Altman,18,49
+Extracapsular cataract removal,Dr. Smith,18,24
+Extracapsular cataract removal,Dr. House,15,25
+Extracapsular cataract removal,Dr. Bailey,14,39
+Extracapsular cataract removal,Dr. Strange,14,24
+Extracapsular cataract removal,Dr. Grey,20,38
+Extracapsular cataract removal,Dr. Yang,14,27
+Extracapsular cataract removal,Dr. Altman,18,30
+"Hysterectomy, surgical",Dr. Ray,77,37
+Cervical biopsy,Dr. Doe,35,48
+"Hysterectomy, surgical",Dr. Karev,77,27
+Cervical biopsy,Dr. Strange,32,38
+Vasectomy,Dr. Smith,39,21
+Cryosurgery of the prostate gland,Dr. Bailey,66,27
+Cystourethroscopy,Dr. Jones,28,28
+Vasectomy,Dr. Yang,28,33
+Cystourethroscopy,Dr. Sloan,27,43
+Liposuction,Dr. Jones,108,25
+Liposuction,Dr. Ray,136,42
+Rhinoplasty,Dr. Strange,72,28
+"Digital amputation, metatarsophalangeal joint",Dr. House,30,46
+"Digital amputation, metatarsophalangeal joint",Dr. Shepherd,36,37
+AV fistula,Dr. Shepherd,52,38
+AV fistula,Dr. Grey,58,31
+Sleeve gastrectomy,Dr. Grey,100,35
+Sleeve gastrectomy,Dr. Strange,92,34
+Laparoscopic cholecystectomy,Dr. Sloan,48,25
+Bunionectomy with distal osteotomy,Dr. House,97,44
+Hallux rigidus correction with cheilectomy,Dr. Grey,42,40
+Bunionectomy with distal osteotomy,Dr. Smith,90,20
+Bunionectomy with distal osteotomy,Dr. Ray,61,32
+"Arthroscopy, knee, surgical",Dr. Grey,30,21
+"Arthroscopy, knee, surgical",Dr. Ray,36,44
+"Arthroscopy, knee, surgical",Dr. Sloan,36,36
+"Arthroscopy, knee, surgical",Dr. Smith,40,44
+"Arthroscopy, knee, surgical",Dr. Smith,31,36
+Extracapsular cataract removal,Dr. House,18,32
+Extracapsular cataract removal,Dr. Karev,18,48
+Extracapsular cataract removal,Dr. Smith,15,33
+Extracapsular cataract removal,Dr. House,14,39
+Extracapsular cataract removal,Dr. Grey,14,28
+Extracapsular cataract removal,Dr. Shepherd,20,45
+Extracapsular cataract removal,Dr. Karev,14,49
+Extracapsular cataract removal,Dr. Bailey,18,46
+"Hysterectomy, surgical",Dr. Karev,77,26
+Cervical biopsy,Dr. Bailey,35,49
+"Hysterectomy, surgical",Dr. Doe,77,49
+Cervical biopsy,Dr. Grey,32,20
+Tonsillectomy,Dr. Jones,25,26
+Septoplasty,Dr. Strange,52,48
+Septoplasty,Dr. Grey,53,39
+Tonsillectomy,Dr. Jones,32,37
+Tonsillectomy,Dr. Sloan,32,43
+Removal of benign skin lesion,Dr. Smith,34,26
+Removal of benign skin lesion,Dr. Yang,26,33
+Removal of benign skin lesion,Dr. Sloan,38,42
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. House,105,38
+"Tympanostomy, general anesthesia",Dr. Doe,30,48
+"Tympanostomy, general anesthesia",Dr. House,34,48
+"Tympanostomy, general anesthesia",Dr. Ray,32,28
+"Myringotomy, general anesthesia",Dr. Jones,28,39
+"Myringotomy, general anesthesia",Dr. House,27,43
+"Arthroplasty, knee, hinge prothesis",Dr. Shepherd,81,47
+"Arthroplasty, knee, hinge prothesis",Dr. Sloan,85,21
+"Arthroplasty, hip",Dr. Yang,88,25
+Plantar fasciotomy,Dr. Doe,37,27
+Plantar fasciotomy,Dr. Yang,32,46
+"Correction, hammertoe",Dr. Torres,40,31
+"Correction, hammertoe",Dr. Grey,50,30
+"Carpal tunnel release, open",Dr. House,37,44
+"Carpal tunnel release, open",Dr. Yang,34,20
+"Fasciotomy, palmar, open",Dr. Doe,56,38
+"ORIF, phalangeal shaft fracture",Dr. Jones,84,27
+Flexor tendon repair,Dr. Ray,47,24
+"Tympanostomy, general anesthesia",Dr. Shepherd,30,21
+"Tympanostomy, general anesthesia",Dr. Yang,34,20
+"Tympanostomy, general anesthesia",Dr. Shepherd,32,28
+"Myringotomy, general anesthesia",Dr. Altman,28,24
+"Myringotomy, general anesthesia",Dr. Torres,27,25
+Vasectomy,Dr. Strange,39,37
+Cryosurgery of the prostate gland,Dr. Sloan,66,31
+Cystourethroscopy,Dr. Altman,20,23
+Vasectomy,Dr. Karev,30,22
+Cystourethroscopy,Dr. Strange,22,20
+Tonsillectomy,Dr. Ray,28,20
+Tonsillectomy,Dr. Yang,27,43
+Tonsillectomy,Dr. Torres,24,40
+Tonsillectomy,Dr. Strange,30,34
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Karev,68,40
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Ray,55,43
+"Adjacent tissue transfer, eyelids, nose, ears, lip",Dr. Smith,71,35

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OR Efficiency Scorecard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <div>
+                <h1>Operating Room Efficiency Scorecard</h1>
+                <p>Real-time analytics for surgical performance, turnover times, and case volume.</p>
+            </div>
+            
+            <div class="controls-container">
+                <select id="surgeon-filter" class="filter-dropdown">
+                    <option value="all">All Surgeons</option>
+                </select>
+
+                <div class="upload-wrapper">
+                    <label for="csv-upload" class="upload-btn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:8px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+                        Upload CSV
+                    </label>
+                    <input type="file" id="csv-upload" accept=".csv">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="card stat-card">
+            <div class="stat-text">
+                <h3>Avg Turnover Time</h3>
+                <div class="big-number" id="avg-turnover">--</div>
+                <div class="status-badge" id="turnover-status">Loading...</div>
+            </div>
+            <div class="icon-box red-icon">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+        </div>
+
+        <div class="card stat-card">
+            <div class="stat-text">
+                <h3>Avg Surgery Duration</h3>
+                <div class="big-number" id="avg-duration">--</div>
+                <div class="status-badge gray">Across selection</div>
+            </div>
+            <div class="icon-box blue-icon">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+        </div>
+
+        <div class="card stat-card">
+            <div class="stat-text">
+                <h3>Total Cases</h3>
+                <div class="big-number" id="total-cases">--</div>
+                <div class="status-badge green">Logged Records</div>
+            </div>
+            <div class="icon-box green-icon">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+            </div>
+        </div>
+
+        <div class="card chart-section">
+            <h2>Surgeon Efficiency (Avg Duration)</h2>
+            <div class="chart-container">
+                <canvas id="surgeonChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card chart-donut">
+            <h2>Procedure Volume Mix</h2>
+            <div class="chart-container">
+                <canvas id="procedureChart"></canvas>
+            </div>
+        </div>
+
+        <div class="data-section card">
+            <h2>Detailed Surgery Log <span style="font-size:0.8em; font-weight:400; color:#64748b; margin-left:10px;">(Click headers to sort)</span></h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th onclick="handleSort('procedure')">Procedure ↕</th>
+                            <th onclick="handleSort('surgeon')">Surgeon ↕</th>
+                            <th onclick="handleSort('duration')">Duration ↕</th>
+                            <th onclick="handleSort('turnover')">Turnover ↕</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@ let myBarChart = null;
 let myPieChart = null;
 let sortDirection = 1;
 let currentPage = 1;
-const rowsPerPage = 10;
+const rowsPerPage = 7;
 
 /* ==========================================
    2. SMART PARSE (Robust CSV + Randomizer)
@@ -92,43 +92,61 @@ function loadDashboard(customCSV = null) {
         }
     }
     allData = smartParse(dataSource);
-    populateFilter();
+    populateFilters(); // Updated Function Name
     currentData = [...allData];
     renderDashboard();
 }
 
-function populateFilter() {
-    const filterSelect = document.getElementById('surgeon-filter');
-    if (!filterSelect) return; 
-    
-    const currentSelection = filterSelect.value;
-    const surgeons = [...new Set(allData.map(d => d.surgeon))].sort();
-    
-    filterSelect.innerHTML = '<option value="all">All Surgeons</option>';
-    surgeons.forEach(s => {
-        const option = document.createElement('option');
-        option.value = s;
-        option.innerText = s;
-        filterSelect.appendChild(option);
-    });
-    
-    // Preserve selection if possible
-    if(surgeons.includes(currentSelection)) filterSelect.value = currentSelection;
+function populateFilters() {
+    // 1. Populate Surgeon Dropdown
+    const surgeonSelect = document.getElementById('surgeon-filter');
+    if (surgeonSelect) {
+        const currentSurgeon = surgeonSelect.value;
+        const surgeons = [...new Set(allData.map(d => d.surgeon))].sort();
+        
+        surgeonSelect.innerHTML = '<option value="all">All Surgeons</option>';
+        surgeons.forEach(s => {
+            const option = document.createElement('option');
+            option.value = s;
+            option.innerText = s;
+            surgeonSelect.appendChild(option);
+        });
+        if(surgeons.includes(currentSurgeon)) surgeonSelect.value = currentSurgeon;
+    }
+
+    // 2. Populate Procedure Dropdown (Use the ID 'search-input' as per your HTML)
+    const procedureSelect = document.getElementById('search-input');
+    if (procedureSelect) {
+        const currentProc = procedureSelect.value;
+        const procedures = [...new Set(allData.map(d => d.procedure))].sort();
+
+        // Start with "All Procedures"
+        procedureSelect.innerHTML = '<option value="">All Procedures</option>';
+        
+        procedures.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p;
+            option.innerText = p;
+            procedureSelect.appendChild(option);
+        });
+
+        if(procedures.includes(currentProc)) procedureSelect.value = currentProc;
+    }
 }
 
 /* ==========================================
    4. FILTER ENGINE
-   ========================================== */
+   ========================================= */
 function applyFilters() {
     currentPage = 1; // Reset to page 1 on new filter
     
     const surgeonSelect = document.getElementById('surgeon-filter');
-    const searchInput = document.getElementById('search-input');
+    const procedureSelect = document.getElementById('search-input'); // This is now a Dropdown
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
     
     const selectedSurgeon = surgeonSelect ? surgeonSelect.value : 'all';
-    const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
+    const selectedProcedure = procedureSelect ? procedureSelect.value : "";
     
     const startVal = startDateInput && startDateInput.value ? new Date(startDateInput.value) : null;
     const endVal = endDateInput && endDateInput.value ? new Date(endDateInput.value) : null;
@@ -143,12 +161,9 @@ function applyFilters() {
         result = result.filter(item => item.surgeon === selectedSurgeon);
     }
     
-    // 2. Search Filter
-    if (searchTerm) {
-        result = result.filter(item => 
-            item.procedure.toLowerCase().includes(searchTerm) || 
-            item.surgeon.toLowerCase().includes(searchTerm)
-        );
+    // 2. Procedure Filter (Exact Match now, instead of search)
+    if (selectedProcedure !== "") {
+        result = result.filter(item => item.procedure === selectedProcedure);
     }
     
     // 3. Date Range Filter
@@ -396,7 +411,14 @@ function renderCharts(data) {
                         const index = activeEls[0].index;
                         const selectedProc = pieLabels[index];
                         if(selectedProc === 'Other') return;
-                        document.getElementById('search-input').value = selectedProc;
+                        
+                        // Set dropdown value logic
+                        const drop = document.getElementById('search-input');
+                        if(drop) {
+                             drop.value = selectedProc;
+                             // Fallback if option doesn't exist (because chart grouped it)
+                             if(drop.value !== selectedProc) drop.value = "";
+                        }
                         applyFilters();
                     }
                 },
@@ -415,7 +437,6 @@ function showLeaderboard() {
     const stats = {};
     
     // Calculate stats based on ALL data (Global Ranking)
-    // If you want filtered ranking, use currentData instead of allData
     allData.forEach(d => {
         if(!stats[d.surgeon]) stats[d.surgeon] = { totalTurn: 0, count: 0 };
         stats[d.surgeon].totalTurn += d.turnover;
@@ -552,12 +573,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // -- FILTER INPUTS --
 const filterDropdown = document.getElementById('surgeon-filter');
-const searchBox = document.getElementById('search-input');
+const procedureDropdown = document.getElementById('search-input'); // Renamed var for clarity
 const startDateEl = document.getElementById('start-date');
 const endDateEl = document.getElementById('end-date');
 
 if (filterDropdown) filterDropdown.addEventListener('change', applyFilters);
-if (searchBox) searchBox.addEventListener('input', applyFilters);
+if (procedureDropdown) procedureDropdown.addEventListener('change', applyFilters); // Changed to 'change'
 if (startDateEl) startDateEl.addEventListener('change', applyFilters);
 if (endDateEl) endDateEl.addEventListener('change', applyFilters);
 
@@ -566,22 +587,18 @@ document.getElementById('prev-btn')?.addEventListener('click', prevPage);
 document.getElementById('next-btn')?.addEventListener('click', nextPage);
 
 // -- NEW BUTTON ACTIONS --
-// 1. Export
 const exportBtn = document.getElementById('export-btn');
 if (exportBtn) exportBtn.addEventListener('click', exportToCSV);
 
-// 2. Leaderboard
 const leaderboardBtn = document.getElementById('leaderboard-btn');
 if (leaderboardBtn) leaderboardBtn.addEventListener('click', showLeaderboard);
 
-// 3. Info Modal
 const infoBtn = document.getElementById('info-btn');
 const infoModal = document.getElementById('info-modal');
 if (infoBtn && infoModal) {
     infoBtn.addEventListener('click', () => infoModal.classList.remove('hidden'));
 }
 
-// 4. Clear Button
 const clearBtn = document.getElementById('clear-btn');
 if (clearBtn) {
     clearBtn.addEventListener('click', () => {

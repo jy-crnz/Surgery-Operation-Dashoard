@@ -2,7 +2,7 @@
    1. GLOBAL RESET & VARIABLES
    ========================================= */
 :root {
-    /* LIGHT MODE (Default) */
+    /* LIGHT MODE (Standard) */
     --primary: #2563eb;       
     --primary-dark: #1e40af;
     --secondary: #64748b;     
@@ -20,20 +20,31 @@
     --input-border: transparent;
 }
 
-/* DARK MODE OVERRIDES */
+/* DARK MODE OVERRIDES (Improved) */
 [data-theme="dark"] {
-    --primary: #1e3a8a;       
-    --primary-dark: #172554;  
-    --secondary: #94a3b8;     
+    /* brighter blue for better contrast against dark bg */
+    --primary: #60a5fa;       
+    --primary-dark: #3b82f6;  
+    
+    /* much lighter gray for secondary text */
+    --secondary: #cbd5e1;     
+    
+    /* soft pastel red/green - easier to read than dark red/green */
+    --success: #34d399;       
+    --danger: #f87171;        
+    
+    /* Deep slate background */
     --background: #0f172a;    
     --card-bg: #1e293b;       
-    --text-main: #f1f5f9;     
+    --text-main: #f8fafc;     
+    
+    /* Lighter borders to define sections */
     --border: #334155;        
-    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow: rgba(0, 0, 0, 0.5);
 
-    /* Dark Mode Inputs */
+    /* Inputs: slightly lighter than card to stand out */
     --input-bg: #334155;      
-    --input-text: #f1f5f9;    
+    --input-text: #ffffff;    
     --input-border: #475569;
 }
 
@@ -278,6 +289,20 @@ td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 0.95
 .page-btn:hover:not(:disabled) { background-color: var(--primary); color: white; border-color: var(--primary); }
 .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 #page-info { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+
+/* Add this inside Section 6 */
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.05); /* Very subtle blue tint */
+}
+
+/* Specific Dark Mode Hover */
+[data-theme="dark"] tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle white tint */
+}
 
 /* =========================================
    7. MODAL STYLES (Info & Leaderboard)

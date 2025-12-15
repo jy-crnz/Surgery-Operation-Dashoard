@@ -83,7 +83,13 @@
                     <input type="date" id="end-date" class="control-input" aria-label="End Date">
                 </div>
                 
-                <input type="text" id="search-input" class="control-input search-box" placeholder="Search procedures...">
+                <select id="search-input" class="control-input search-box" aria-label="Filter Procedure">
+                    <option value="">All Procedures</option>
+                    <option value="Appendectomy">Appendectomy</option>
+                    <option value="Knee Replacement">Knee Replacement</option>
+                    <option value="Cholecystectomy">Cholecystectomy</option>
+                    <option value="Hip Fracture">Hip Fracture</option>
+                    </select>
 
                 <div class="action-group">
                     <button id="clear-btn" class="icon-btn secondary" title="Reset all filters">

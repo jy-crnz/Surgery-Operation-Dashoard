@@ -1,109 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OR Efficiency Scorecard</title>
+    <title>OR Efficiency Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2235%22 y=%2210%22 width=%2230%22 height=%2280%22 rx=%2210%22 fill=%22%232563eb%22/><rect x=%2210%22 y=%2235%22 width=%2280%22 height=%2230%22 rx=%2210%22 fill=%22%232563eb%22/></svg>">
 </head>
 <body>
 
-    <div class="hero-section">
-        <div class="hero-content">
-            <div>
-                <h1>Operating Room Efficiency Scorecard</h1>
-                <p>Real-time analytics for surgical performance, turnover times, and case volume.</p>
-            </div>
-            
-            <div class="controls-container">
-                <select id="surgeon-filter" class="filter-dropdown">
-                    <option value="all">All Surgeons</option>
-                </select>
-                
-                <input type="text" id="search-input" class="search-box" placeholder="Search procedures...">
-
-                <div class="upload-wrapper">
-                    <label for="csv-upload" class="upload-btn">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:8px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
-                        Upload CSV
-                    </label>
-                    <input type="file" id="csv-upload" accept=".csv">
-                </div>
+    <div id="loader-overlay">
+        <div class="loader-content">
+            <svg class="heartbeat-svg" viewBox="0 0 150 55" preserveAspectRatio="none">
+                <polyline class="ekg-bg" points="0,30 45,30 55,5 65,50 75,30 150,30" />
+                <polyline class="ekg-line" points="0,30 45,30 55,5 65,50 75,30 150,30" />
+            </svg>
+            <div class="text-wrapper">
+                <h2>OR DASHBOARD</h2>
+                <div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>
             </div>
         </div>
     </div>
 
+    <div class="hero-section">
+        <div class="hero-content">
+            
+            <div class="header-top">
+                <div class="header-left">
+                    <div class="logo-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h1>Operating Room Efficiency Scorecard</h1>
+                        <p>Real-time analytics for surgical performance and turnover.</p>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <button id="leaderboard-btn" class="icon-btn secondary" title="View Top Performers">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                        <span class="btn-text">Top Performers</span>
+                    </button>
+
+                    <button id="info-btn" class="icon-btn secondary" title="Dashboard Info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span class="btn-text">Info</span>
+                    </button>
+
+                    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+                        <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="controls-container">
+                <select id="surgeon-filter" class="control-input" aria-label="Filter Surgeon">
+                    <option value="all">All Surgeons</option>
+                </select>
+
+                <div class="date-group">
+                    <input type="date" id="start-date" class="control-input" aria-label="Start Date">
+                    <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">to</span>
+                    <input type="date" id="end-date" class="control-input" aria-label="End Date">
+                </div>
+                
+                <input type="text" id="search-input" class="control-input search-box" placeholder="Search procedures...">
+
+                <div class="action-group">
+                    <button id="clear-btn" class="icon-btn secondary" title="Reset all filters">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                        <span class="btn-text">Clear Filters</span>
+                    </button>
+
+                    <button id="export-btn" class="icon-btn primary" title="Download Data">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span class="btn-text">Export CSV</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <div class="container">
-
         <div class="card stat-card">
-            <div class="stat-text">
-                <h3>Avg Turnover Time</h3>
-                <div class="big-number" id="avg-turnover">--</div>
-                <div class="status-badge" id="turnover-status">Loading...</div>
-            </div>
-            <div class="icon-box red-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
+            <div><h3>Avg Turnover Time</h3><div class="big-number" id="avg-turnover">--</div><span id="turnover-status" class="status-badge gray">Waiting</span></div>
+            <div class="icon-box red-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
         </div>
-
         <div class="card stat-card">
-            <div class="stat-text">
-                <h3>Avg Surgery Duration</h3>
-                <div class="big-number" id="avg-duration">--</div>
-                <div class="status-badge gray">Across selection</div>
-            </div>
-            <div class="icon-box blue-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            </div>
+            <div><h3>Avg Surgery Duration</h3><div class="big-number" id="avg-duration">--</div><span class="status-badge blue">All Cases</span></div>
+            <div class="icon-box blue-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
         </div>
-
         <div class="card stat-card">
-            <div class="stat-text">
-                <h3>Total Cases</h3>
-                <div class="big-number" id="total-cases">--</div>
-                <div class="status-badge green">Logged Records</div>
-            </div>
-            <div class="icon-box green-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-            </div>
+            <div><h3>Total Cases</h3><div class="big-number" id="total-cases">0</div><span class="status-badge green">Records Found</span></div>
+            <div class="icon-box green-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div>
         </div>
 
-        <div class="card chart-section">
-            <h2>Surgeon Efficiency (Avg Duration)</h2>
-            <div class="chart-container">
-                <canvas id="surgeonChart"></canvas>
-            </div>
-        </div>
+        <div class="card chart-section"><h2>Surgeon Efficiency</h2><div class="chart-container"><canvas id="surgeonChart"></canvas></div></div>
+        <div class="card chart-donut"><h2>Procedure Mix</h2><div class="chart-container"><canvas id="procedureChart"></canvas></div></div>
 
-        <div class="card chart-donut">
-            <h2>Procedure Volume Mix</h2>
-            <div class="chart-container">
-                <canvas id="procedureChart"></canvas>
-            </div>
-        </div>
-
-        <div class="data-section card">
-            <h2>Detailed Surgery Log <span style="font-size:0.8em; font-weight:400; color:#64748b; margin-left:10px;">(Click headers to sort)</span></h2>
+        <div class="card data-section">
+            <h2>Detailed Logs <span style="font-size:0.8rem; font-weight:400; color:var(--secondary);">(Click headers to sort)</span></h2>
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
+                            <th onclick="handleSort('date')">Date ↕</th>
                             <th onclick="handleSort('procedure')">Procedure ↕</th>
                             <th onclick="handleSort('surgeon')">Surgeon ↕</th>
                             <th onclick="handleSort('duration')">Duration ↕</th>
                             <th onclick="handleSort('turnover')">Turnover ↕</th>
                         </tr>
                     </thead>
-                    <tbody id="table-body">
-                        </tbody>
+                    <tbody id="table-body"></tbody>
                 </table>
+            </div>
+            <div class="pagination-container">
+                <button id="prev-btn" class="page-btn">Prev</button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-btn" class="page-btn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>About This Dashboard</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Data Source:</strong> Electronic Health Records (EHR) - Surgical Module.</p>
+                
+                <p><strong>Collection Method:</strong></p>
+                <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 20px; color: var(--secondary);">
+                    <li><strong>Start Time:</strong> Patient "Wheels In" timestamp.</li>
+                    <li><strong>End Time:</strong> Patient "Wheels Out" timestamp.</li>
+                    <li><strong>Turnover:</strong> Calculated gap between cases in the same OR.</li>
+                </ul>
+
+                <p><strong>Last Updated:</strong> <span id="last-updated-date">Live</span></p>
+                
+                <div style="margin-top: 15px; padding: 10px; background: rgba(37, 99, 235, 0.1); border-radius: 6px; font-size: 0.85rem; color: var(--text-main);">
+                    <strong>Note:</strong> Data is anonymized for HIPAA compliance.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏆 Top Performers (Efficiency)</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-top:0; color:var(--secondary); font-size:0.9rem;">Ranked by Lowest Average Turnover Time.</p>
+                <div id="leaderboard-list"></div>
             </div>
         </div>
     </div>
 
     <script src="database.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Modal Logic
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.target.closest('.modal-overlay').classList.add('hidden');
+            });
+        });
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.classList.add('hidden');
+            });
+        });
+    </script>
 </body>
 </html>

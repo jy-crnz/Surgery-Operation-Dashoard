@@ -64,4 +64,4 @@ An interactive analytics dashboard designed to help hospital administrators and 
 
 ## 📝 Credits
 * **Data Source:** [Kaggle: Operating Room Utilization Dataset](https://www.kaggle.com/datasets/thedevastator/optimizing-operating-room-utilization)
-* **Development:** Built by **[Your Name/Username]**
+* **Development:** Built by **Jay Lawrence C. Cerniaz**

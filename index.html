@@ -85,10 +85,6 @@
                 
                 <select id="search-input" class="control-input search-box" aria-label="Filter Procedure">
                     <option value="">All Procedures</option>
-                    <option value="Appendectomy">Appendectomy</option>
-                    <option value="Knee Replacement">Knee Replacement</option>
-                    <option value="Cholecystectomy">Cholecystectomy</option>
-                    <option value="Hip Fracture">Hip Fracture</option>
                     </select>
 
                 <div class="action-group">
@@ -115,21 +111,48 @@
     </div>
 
     <div class="container">
-        <div class="card stat-card">
-            <div><h3>Avg Turnover Time</h3><div class="big-number" id="avg-turnover">--</div><span id="turnover-status" class="status-badge gray">Waiting</span></div>
-            <div class="icon-box red-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+        
+        <div class="card stat-card" onclick="openDetailModal('turnover')">
+            <div>
+                <h3>Avg Turnover Time</h3>
+                <div class="big-number" id="avg-turnover">--</div>
+                <span id="turnover-status" class="status-badge gray">Waiting</span>
+            </div>
+            <div class="icon-box red-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
         </div>
-        <div class="card stat-card">
-            <div><h3>Avg Surgery Duration</h3><div class="big-number" id="avg-duration">--</div><span class="status-badge blue">All Cases</span></div>
-            <div class="icon-box blue-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+        
+        <div class="card stat-card" onclick="openDetailModal('duration')">
+            <div>
+                <h3>Avg Surgery Duration</h3>
+                <div class="big-number" id="avg-duration">--</div>
+                <span class="status-badge blue">All Cases</span>
+            </div>
+            <div class="icon-box blue-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
         </div>
-        <div class="card stat-card">
-            <div><h3>Total Cases</h3><div class="big-number" id="total-cases">0</div><span class="status-badge green">Records Found</span></div>
-            <div class="icon-box green-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div>
+        
+        <div class="card stat-card" onclick="openDetailModal('cases')">
+            <div>
+                <h3>Total Cases</h3>
+                <div class="big-number" id="total-cases">0</div>
+                <span class="status-badge green">Records Found</span>
+            </div>
+            <div class="icon-box green-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            </div>
         </div>
 
-        <div class="card chart-section"><h2>Surgeon Efficiency</h2><div class="chart-container"><canvas id="surgeonChart"></canvas></div></div>
-        <div class="card chart-donut"><h2>Procedure Mix</h2><div class="chart-container"><canvas id="procedureChart"></canvas></div></div>
+        <div class="card chart-section">
+            <h2>Surgeon Efficiency</h2>
+            <div class="chart-container"><canvas id="surgeonChart"></canvas></div>
+        </div>
+        <div class="card chart-donut">
+            <h2>Procedure Mix</h2>
+            <div class="chart-container"><canvas id="procedureChart"></canvas></div>
+        </div>
 
         <div class="card data-section">
             <h2>Detailed Logs <span style="font-size:0.8rem; font-weight:400; color:var(--secondary);">(Click headers to sort)</span></h2>
@@ -162,9 +185,9 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p><strong>Data Source:</strong> Electronic Health Records (EHR) - Surgical Module.</p>
+                <p><strong>Data Source:</strong> <a href="https://www.kaggle.com/datasets/thedevastator/optimizing-operating-room-utilization" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">Kaggle: Operating Room Utilization Dataset</a></p>
                 
-                <p><strong>Collection Method:</strong></p>
+                <p><strong>Metrics Defined:</strong></p>
                 <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 20px; color: var(--secondary);">
                     <li><strong>Start Time:</strong> Patient "Wheels In" timestamp.</li>
                     <li><strong>End Time:</strong> Patient "Wheels Out" timestamp.</li>
@@ -193,10 +216,21 @@
         </div>
     </div>
 
+    <div id="details-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detail-modal-title">Metric Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="detail-modal-body">
+                </div>
+        </div>
+    </div>
+
     <script src="database.js"></script>
     <script src="script.js"></script>
     <script>
-        // Modal Logic
+        // Global Modal Logic (handles closing all modals)
         document.querySelectorAll('.close-modal').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.target.closest('.modal-overlay').classList.add('hidden');

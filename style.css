@@ -2,7 +2,7 @@
    1. GLOBAL RESET & VARIABLES
    ========================================= */
 :root {
-    /* LIGHT MODE (Standard) */
+    /* LIGHT MODE (Default) */
     --primary: #2563eb;       
     --primary-dark: #1e40af;
     --secondary: #64748b;     
@@ -20,16 +20,16 @@
     --input-border: transparent;
 }
 
-/* DARK MODE OVERRIDES (Improved) */
+/* DARK MODE OVERRIDES (Refined for Better Contrast) */
 [data-theme="dark"] {
-    /* brighter blue for better contrast against dark bg */
+    /* Brighter blue for better contrast against dark bg */
     --primary: #60a5fa;       
     --primary-dark: #3b82f6;  
     
-    /* much lighter gray for secondary text */
+    /* Much lighter gray for secondary text */
     --secondary: #cbd5e1;     
     
-    /* soft pastel red/green - easier to read than dark red/green */
+    /* Soft pastel red/green - easier to read than dark red/green */
     --success: #34d399;       
     --danger: #f87171;        
     
@@ -97,7 +97,7 @@ body {
 .hero-content {
     width: 100%; max-width: 1200px;
     display: flex; flex-direction: column; 
-    gap: 25px; /* Spacing between Header Top and Controls */
+    gap: 25px; 
 }
 
 /* HEADER STRUCTURE */
@@ -114,7 +114,6 @@ body {
     align-items: flex-start; 
 }
 
-/* NEW: Right side containing Top Performers, Info, Theme */
 .header-right {
     display: flex;
     align-items: center;
@@ -145,7 +144,7 @@ body {
 [data-theme="dark"] .icon-sun { display: block; } [data-theme="dark"] .icon-moon { display: none; }
 
 /* =========================================
-   4. CONTROLS (Single Line Layout)
+   4. CONTROLS (Inputs & Dropdowns)
    ========================================= */
 .controls-container {
     display: flex; 
@@ -155,7 +154,7 @@ body {
     width: 100%; 
 }
 
-/* UNIFIED INPUT STYLE */
+/* UNIFIED INPUT STYLE (Works for Text & Select) */
 .control-input {
     height: 42px;
     padding: 0 15px;
@@ -181,7 +180,7 @@ body {
 .action-group { 
     display: flex; 
     gap: 12px; 
-    margin-left: auto; /* Pushes to the right */
+    margin-left: auto; 
 }
 
 /* BUTTONS */
@@ -194,7 +193,6 @@ body {
 .icon-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
 .btn-text { display: inline-block; }
 
-/* Primary (Export) */
 .icon-btn.primary { 
     background-color: var(--input-bg); 
     color: #2563eb;           
@@ -203,7 +201,6 @@ body {
 [data-theme="dark"] .icon-btn.primary { color: #60a5fa; }
 .icon-btn.primary:hover { background-color: var(--background); }
 
-/* Secondary (Clear/Info/Leaderboard) */
 .icon-btn.secondary { 
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -212,7 +209,7 @@ body {
 .icon-btn.secondary:hover { background: rgba(255, 255, 255, 0.25); }
 
 /* =========================================
-   5. MAIN GRID LAYOUT
+   5. MAIN GRID LAYOUT & CARDS
    ========================================= */
 .container {
     max-width: 1200px; margin: 0 auto; padding: 0 20px 40px 20px;
@@ -225,8 +222,18 @@ body {
     box-shadow: 0 4px 6px -1px var(--shadow); border: 1px solid var(--border);
 }
 
-/* Stat Cards */
-.stat-card { display: flex; justify-content: space-between; align-items: flex-start; }
+/* Stat Cards (Interactive) */
+.stat-card { 
+    display: flex; justify-content: space-between; align-items: flex-start;
+    /* NEW: Interaction Styles */
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
 .stat-card:nth-of-type(1) { grid-area: stat1; border-left: 5px solid var(--danger); }
 .stat-card:nth-of-type(2) { grid-area: stat2; border-left: 5px solid var(--primary); } 
 .stat-card:nth-of-type(3) { grid-area: stat3; border-left: 5px solid var(--success); }
@@ -277,6 +284,11 @@ th:hover { color: var(--text-main); }
 td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
 .high-alert { color: var(--danger); font-weight: 700; }
 
+/* NEW: Table Hover Effects */
+tbody tr { transition: background-color 0.2s ease; }
+tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
+[data-theme="dark"] tbody tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+
 /* PAGINATION */
 .pagination-container {
     display: flex; justify-content: center; align-items: center; gap: 20px;
@@ -290,22 +302,8 @@ td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 0.95
 .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 #page-info { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
 
-/* Add this inside Section 6 */
-tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-tbody tr:hover {
-    background-color: rgba(37, 99, 235, 0.05); /* Very subtle blue tint */
-}
-
-/* Specific Dark Mode Hover */
-[data-theme="dark"] tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.05); /* Subtle white tint */
-}
-
 /* =========================================
-   7. MODAL STYLES (Info & Leaderboard)
+   7. MODAL STYLES (Info, Leaderboard, Details)
    ========================================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -399,4 +397,129 @@ tbody tr:hover {
     .data-section { border-radius: 12px; margin: 0; width: 100%; }
     .table-wrapper { margin-top: 15px; }
     th, td { padding: 12px 10px; font-size: 0.85rem; }
+}
+
+/* =========================================
+   9. CUSTOM SCROLLBAR (New)
+   ========================================= */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--background); 
+}
+::-webkit-scrollbar-thumb {
+    background: var(--secondary); 
+    border-radius: 5px;
+    border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary); 
+}
+
+/* =========================================
+   10. IMPROVED MODAL DESIGN
+   ========================================= */
+
+/* Make the modal popup look cleaner and more modern */
+.modal-content {
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden; /* Keeps content inside rounded corners */
+}
+
+.modal-header {
+    background: var(--background); /* Slightly different shade than body */
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+}
+
+.modal-header h3 {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* The Grid Layout for Stats inside Modals */
+.modal-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.modal-stat-box {
+    background: var(--background);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.modal-stat-box:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.modal-stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.modal-stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* Insight Box Styling */
+.insight-box {
+    background: linear-gradient(to right, rgba(37, 99, 235, 0.05), transparent);
+    border-left: 4px solid var(--primary);
+    padding: 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+/* List Styling for Duration */
+.duration-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.duration-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--background);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.duration-tag {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.tag-long { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+.tag-short { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+.tag-med { background: rgba(37, 99, 235, 0.15); color: var(--primary); }
+
+/* Dark Mode Specific Tweaks */
+[data-theme="dark"] .modal-stat-box {
+    background: rgba(255, 255, 255, 0.03); /* Subtle glass effect */
 }

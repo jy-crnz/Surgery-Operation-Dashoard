@@ -5,39 +5,31 @@ let allData = [];
 let currentData = [];
 let myBarChart = null;
 let myPieChart = null;
+let myLineChart = null; 
 let sortDirection = 1;
 let currentPage = 1;
-const rowsPerPage = 10; // Change to 8 if you want to remove the scrollbar
+const rowsPerPage = 8; 
 
 /* ==========================================
-   2. SMART PARSE (Handles CSV Logic)
+   2. SMART PARSE (Tuned for Service Line Analysis)
    ========================================== */
 function smartParse(csvText) {
     if (!csvText) return [];
     const lines = csvText.trim().split('\n');
     if (lines.length < 2) return [];
 
-    // Regex to handle commas inside quotes (e.g., "Hernia Repair, Inguinal")
     const headers = lines[0].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
     
     const colMap = {
-        procedure: headers.findIndex(h => h.includes('procedure')),
-        surgeon: headers.findIndex(h => h.includes('surgeon')),
-        duration: headers.findIndex(h => h.includes('duration')),
-        turnover: headers.findIndex(h => h.includes('turnover')),
-        // Optional date parsing if your CSV has dates, otherwise we generate them below
-        date: headers.findIndex(h => h.includes('date')) 
+        procedure: headers.indexOf('cpt description'), 
+        service: headers.indexOf('service'),           
+        date: headers.indexOf('date'),
+        wheelsIn: headers.indexOf('wheels in'),        
+        wheelsOut: headers.indexOf('wheels out'),      
+        bookedTime: headers.findIndex(h => h.includes('booked time')) 
     };
 
     const results = [];
-    
-    // Helper to generate a date within the last 3 months if missing
-    const generateRandomDate = () => {
-        const end = new Date();
-        const start = new Date();
-        start.setDate(end.getDate() - 90); 
-        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    };
 
     for (let i = 1; i < lines.length; i++) {
         const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -46,16 +38,29 @@ function smartParse(csvText) {
         const getVal = (idx) => (idx > -1 && row[idx]) ? row[idx].replace(/^"|"$/g, '').trim() : null;
 
         let procedure = getVal(colMap.procedure) || "Unknown Procedure";
-        let surgeon = getVal(colMap.surgeon) || "Unknown Surgeon";
-        let duration = parseInt(getVal(colMap.duration)) || 0;
-        let turnover = parseInt(getVal(colMap.turnover)) || 0;
+        let surgeon = getVal(colMap.service) || "General"; 
 
-        // Use CSV date if available, otherwise generate random
-        let surgeryDate;
+        let duration = 0;
+        const tIn = getVal(colMap.wheelsIn);
+        const tOut = getVal(colMap.wheelsOut);
+        
+        if (tIn && tOut) {
+            const d1 = new Date(tIn);
+            const d2 = new Date(tOut);
+            if (!isNaN(d1) && !isNaN(d2)) {
+                duration = Math.round((d2 - d1) / 60000); 
+            }
+        }
+        if (duration === 0 || isNaN(duration)) {
+            duration = parseInt(getVal(colMap.bookedTime)) || 60;
+        }
+
+        // Simulated Turnover
+        let turnover = Math.floor(Math.random() * (60 - 15) + 15);
+
+        let surgeryDate = new Date();
         if(colMap.date > -1 && getVal(colMap.date)) {
              surgeryDate = new Date(getVal(colMap.date));
-        } else {
-             surgeryDate = generateRandomDate();
         }
 
         results.push({ 
@@ -67,7 +72,7 @@ function smartParse(csvText) {
         });
     }
     
-    // Sort by date descending (newest first)
+    // Sort Descending (Newest First)
     return results.sort((a, b) => b.date - a.date);
 }
 
@@ -77,7 +82,6 @@ function smartParse(csvText) {
 function loadDashboard(customCSV = null) {
     let dataSource = customCSV;
     if (!dataSource) {
-        // Check if database.js is loaded
         if (typeof csvData !== 'undefined') {
             dataSource = csvData; 
         } else {
@@ -86,47 +90,77 @@ function loadDashboard(customCSV = null) {
         }
     }
     
-    // Parse data and force exactly 327 records as requested
+    // Force exactly 327 rows for performance demo
     allData = smartParse(dataSource).slice(0, 327);
     
     populateFilters();
+    setDateBoundaries(); // <--- LIMITS DATE PICKERS
+    
     currentData = [...allData];
     renderDashboard();
 }
 
+/* ==========================================
+   HELPER: DROPDOWNS & DATES
+   ========================================== */
+function updateProcedureOptions(selectedService) {
+    const procedureSelect = document.getElementById('search-input');
+    if (!procedureSelect) return;
+
+    let relevantData = allData;
+    if (selectedService !== 'all') {
+        relevantData = allData.filter(d => d.surgeon === selectedService);
+    }
+
+    const procedures = [...new Set(relevantData.map(d => d.procedure))].sort();
+
+    procedureSelect.innerHTML = '<option value="">All Procedures</option>';
+    procedures.forEach(p => {
+        const option = document.createElement('option');
+        option.value = p;
+        option.innerText = p;
+        procedureSelect.appendChild(option);
+    });
+    procedureSelect.value = "";
+}
+
 function populateFilters() {
-    // 1. Populate Surgeon Dropdown
     const surgeonSelect = document.getElementById('surgeon-filter');
     if (surgeonSelect) {
-        const currentSurgeon = surgeonSelect.value;
-        const surgeons = [...new Set(allData.map(d => d.surgeon))].sort();
-        
-        surgeonSelect.innerHTML = '<option value="all">All Surgeons</option>';
-        surgeons.forEach(s => {
+        const services = [...new Set(allData.map(d => d.surgeon))].sort();
+        surgeonSelect.innerHTML = '<option value="all">All Services</option>';
+        services.forEach(s => {
             const option = document.createElement('option');
             option.value = s;
             option.innerText = s;
             surgeonSelect.appendChild(option);
         });
-        // Restore selection if valid
-        if(surgeons.includes(currentSurgeon)) surgeonSelect.value = currentSurgeon;
     }
+    updateProcedureOptions('all');
+}
 
-    // 2. Populate Procedure Dropdown (Dynamic)
-    const procedureSelect = document.getElementById('search-input');
-    if (procedureSelect) {
-        const currentProc = procedureSelect.value;
-        const procedures = [...new Set(allData.map(d => d.procedure))].sort();
+function setDateBoundaries() {
+    const startInput = document.getElementById('start-date');
+    const endInput = document.getElementById('end-date');
+    
+    if (!allData.length || !startInput || !endInput) return;
 
-        procedureSelect.innerHTML = '<option value="">All Procedures</option>';
-        procedures.forEach(p => {
-            const option = document.createElement('option');
-            option.value = p;
-            option.innerText = p;
-            procedureSelect.appendChild(option);
-        });
-        // Restore selection if valid
-        if(procedures.includes(currentProc)) procedureSelect.value = currentProc;
+    // Data is sorted Newest -> Oldest
+    const maxDateObj = allData[0].date; 
+    const minDateObj = allData[allData.length - 1].date;
+
+    const toISODate = (d) => {
+        return d instanceof Date && !isNaN(d) ? d.toISOString().split('T')[0] : '';
+    };
+
+    const minStr = toISODate(minDateObj);
+    const maxStr = toISODate(maxDateObj);
+
+    if (minStr && maxStr) {
+        startInput.min = minStr;
+        startInput.max = maxStr;
+        endInput.min = minStr;
+        endInput.max = maxStr;
     }
 }
 
@@ -134,35 +168,31 @@ function populateFilters() {
    4. FILTER ENGINE
    ========================================== */
 function applyFilters() {
-    currentPage = 1; // Reset to page 1 on new filter
+    currentPage = 1; 
     
     const surgeonSelect = document.getElementById('surgeon-filter');
     const procedureSelect = document.getElementById('search-input');
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
     
-    const selectedSurgeon = surgeonSelect ? surgeonSelect.value : 'all';
+    const selectedService = surgeonSelect ? surgeonSelect.value : 'all';
     const selectedProcedure = procedureSelect ? procedureSelect.value : "";
     
     const startVal = startDateInput && startDateInput.value ? new Date(startDateInput.value) : null;
     const endVal = endDateInput && endDateInput.value ? new Date(endDateInput.value) : null;
     
-    // Adjust end date to include the full day
     if (endVal) endVal.setHours(23, 59, 59, 999);
 
     let result = allData;
 
-    // 1. Surgeon Filter
-    if (selectedSurgeon !== 'all') {
-        result = result.filter(item => item.surgeon === selectedSurgeon);
+    if (selectedService !== 'all') {
+        result = result.filter(item => item.surgeon === selectedService);
     }
     
-    // 2. Procedure Filter (Exact Match)
     if (selectedProcedure !== "") {
         result = result.filter(item => item.procedure === selectedProcedure);
     }
     
-    // 3. Date Range Filter
     if (startVal) result = result.filter(item => item.date >= startVal);
     if (endVal) result = result.filter(item => item.date <= endVal);
 
@@ -171,20 +201,25 @@ function applyFilters() {
 }
 
 /* ==========================================
-   5. PAGINATION LOGIC
+   5. PAGINATION LOGIC (EDITABLE)
    ========================================== */
 function updatePaginationControls() {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    const pageInfo = document.getElementById('page-info');
+    const pageInput = document.getElementById('page-input');
+    const totalPagesSpan = document.getElementById('total-pages');
     
-    if (!prevBtn || !nextBtn || !pageInfo) return;
+    if (!prevBtn || !nextBtn || !pageInput) return;
 
-    const totalPages = Math.ceil(currentData.length / rowsPerPage);
-    pageInfo.innerText = `Page ${currentPage} of ${totalPages || 1}`;
+    const totalPages = Math.ceil(currentData.length / rowsPerPage) || 1;
+
+    // Update Input Value
+    pageInput.value = currentPage;
+    pageInput.max = totalPages;
+    totalPagesSpan.innerText = `of ${totalPages}`;
 
     prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+    nextBtn.disabled = currentPage === totalPages;
 }
 
 function prevPage() {
@@ -208,7 +243,6 @@ function nextPage() {
 function handleSort(key) {
     sortDirection *= -1; 
     currentPage = 1;
-
     updateSortIcons(key, sortDirection);
 
     currentData.sort((a, b) => {
@@ -216,7 +250,6 @@ function handleSort(key) {
         let valB = b[key];
         
         if (valA instanceof Date) return (valA - valB) * sortDirection;
-        
         if (typeof valA === 'string') valA = valA.toLowerCase();
         if (typeof valB === 'string') valB = valB.toLowerCase();
         
@@ -229,8 +262,6 @@ function handleSort(key) {
 
 function updateSortIcons(activeKey, direction) {
     const headers = document.querySelectorAll('th');
-    
-    // Reset all
     headers.forEach(th => {
         th.style.color = 'var(--secondary)';
         if (th.innerText.includes('↑') || th.innerText.includes('↓')) {
@@ -238,7 +269,6 @@ function updateSortIcons(activeKey, direction) {
         }
     });
 
-    // Set active
     headers.forEach(th => {
         if (th.getAttribute('onclick') && th.getAttribute('onclick').includes(activeKey)) {
             th.style.color = 'var(--primary)'; 
@@ -273,14 +303,37 @@ function renderDashboard() {
     document.getElementById('avg-duration').innerText = avgDur + ' min';
     document.getElementById('avg-turnover').innerText = avgTurn + ' min';
     
+    // Status Badge (Turnover)
     const statusEl = document.getElementById('turnover-status');
     if (statusEl) {
-        if (parseFloat(avgTurn) <= 25) {
+        const turnVal = parseFloat(avgTurn);
+        if (turnVal <= 30) {
             statusEl.innerText = "Efficient";
             statusEl.className = "status-badge green";
+        } else if (turnVal <= 50) {
+            statusEl.innerText = "Standard";
+            statusEl.className = "status-badge blue";
         } else {
             statusEl.innerText = "Needs Improvement";
             statusEl.className = "status-badge red";
+        }
+    }
+
+    // SMART BADGE (Duration)
+    const durationBadge = document.querySelector('.card:nth-of-type(2) .status-badge');
+    const surgeonSelect = document.getElementById('surgeon-filter');
+    const procedureSelect = document.getElementById('search-input');
+    const isFiltered = (surgeonSelect && surgeonSelect.value !== 'all') || 
+                       (procedureSelect && procedureSelect.value !== '');
+
+    if (durationBadge) {
+        if (isFiltered) {
+            durationBadge.innerText = "Filtered View";
+            durationBadge.style.opacity = "0.9";
+            durationBadge.className = "status-badge blue"; 
+        } else {
+            durationBadge.innerText = "All Cases";
+            durationBadge.style.opacity = "1";
         }
     }
 
@@ -288,9 +341,9 @@ function renderDashboard() {
     if (currentData.length === 0) {
         tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No records found.</td></tr>';
         updatePaginationControls();
-        // Clear charts
         if (myBarChart) { myBarChart.destroy(); myBarChart = null; }
         if (myPieChart) { myPieChart.destroy(); myPieChart = null; }
+        if (myLineChart) { myLineChart.destroy(); myLineChart = null; }
         return;
     }
 
@@ -300,7 +353,7 @@ function renderDashboard() {
 
     paginatedData.forEach(item => {
         const row = document.createElement('tr');
-        const alertClass = item.turnover > 30 ? 'high-alert' : ''; 
+        const alertClass = item.turnover > 50 ? 'high-alert' : ''; 
         
         row.innerHTML = `
             <td style="color:var(--secondary); font-size:0.85rem;">${item.date.toLocaleDateString()}</td>
@@ -322,17 +375,18 @@ function renderDashboard() {
 function renderCharts(data) {
     const ctxBarEl = document.getElementById('surgeonChart');
     const ctxPieEl = document.getElementById('procedureChart');
+    const ctxLineEl = document.getElementById('trendChart');
 
-    // 1. SURGEON BAR CHART
+    // 1. SERVICE EFFICIENCY BAR CHART
     if (ctxBarEl) {
-        const surgeonStats = {};
+        const stats = {};
         data.forEach(s => {
-            if (!surgeonStats[s.surgeon]) surgeonStats[s.surgeon] = { total: 0, count: 0 };
-            surgeonStats[s.surgeon].total += s.duration;
-            surgeonStats[s.surgeon].count++;
+            if (!stats[s.surgeon]) stats[s.surgeon] = { total: 0, count: 0 };
+            stats[s.surgeon].total += s.duration;
+            stats[s.surgeon].count++;
         });
-        const barLabels = Object.keys(surgeonStats);
-        const barData = barLabels.map(k => (surgeonStats[k].total / surgeonStats[k].count).toFixed(1));
+        const barLabels = Object.keys(stats);
+        const barData = barLabels.map(k => (stats[k].total / stats[k].count).toFixed(1));
 
         if (myBarChart) myBarChart.destroy();
         myBarChart = new Chart(ctxBarEl.getContext('2d'), {
@@ -355,8 +409,9 @@ function renderCharts(data) {
                 onClick: (e, activeEls) => {
                     if (activeEls.length > 0) {
                         const index = activeEls[0].index;
-                        const selectedSurgeon = barLabels[index];
-                        document.getElementById('surgeon-filter').value = selectedSurgeon;
+                        const selectedService = barLabels[index];
+                        document.getElementById('surgeon-filter').value = selectedService;
+                        updateProcedureOptions(selectedService);
                         applyFilters();
                     }
                 }
@@ -415,10 +470,67 @@ function renderCharts(data) {
             }
         });
     }
+    
+    // 3. TREND LINE CHART
+    if (ctxLineEl) {
+        const timeline = {};
+        data.forEach(item => {
+            if (item.date instanceof Date && !isNaN(item.date)) {
+                const dateKey = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                if (!timeline[dateKey]) timeline[dateKey] = { total: 0, count: 0, rawDate: item.date };
+                timeline[dateKey].total += item.turnover;
+                timeline[dateKey].count++;
+            }
+        });
+
+        const sortedTimeline = Object.entries(timeline)
+            .map(([label, val]) => ({
+                label,
+                avg: (val.total / val.count).toFixed(1),
+                rawDate: val.rawDate
+            }))
+            .sort((a, b) => a.rawDate - b.rawDate);
+
+        const finalData = sortedTimeline.slice(-15); 
+        const lineLabels = finalData.map(d => d.label);
+        const lineValues = finalData.map(d => d.avg);
+
+        if (myLineChart) myLineChart.destroy();
+        myLineChart = new Chart(ctxLineEl.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: lineLabels,
+                datasets: [{
+                    label: 'Avg Turnover (min)',
+                    data: lineValues,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#10b981',
+                    pointRadius: 4,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: document.documentElement.getAttribute('data-theme') === 'dark' ? '#334155' : '#e2e8f0' }
+                    },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
 }
 
 /* ==========================================
-   9. NEW FEATURE: CARD DETAILS (Interactive)
+   9. CARD DETAILS (MODALS)
    ========================================== */
 function openDetailModal(type) {
     const modal = document.getElementById('details-modal');
@@ -428,59 +540,116 @@ function openDetailModal(type) {
     if (!modal || !currentData.length) return;
 
     let content = '';
+    const formatNum = (n) => new Intl.NumberFormat().format(n);
 
     if (type === 'turnover') {
-        titleEl.textContent = '⏱️ Turnover Analysis';
-        const fastCases = currentData.filter(d => d.turnover < 25).length;
-        const slowCases = currentData.filter(d => d.turnover > 40).length;
+        const fastCases = currentData.filter(d => d.turnover < 30).length;
+        const slowCases = currentData.filter(d => d.turnover > 50).length;
+        
+        const totalTurn = currentData.reduce((acc, curr) => acc + curr.turnover, 0);
+        const avgTurn = Math.round(totalTurn / currentData.length);
+        const savedHours = Math.round(currentData.length * 5 / 60);
+
+        let insightTitle = "💡 Efficiency Opportunity";
+        let insightMsg = `Reducing average turnover by just 5 minutes would save approximately <strong>${savedHours} hours</strong> of total Operating Room time.`;
+        let insightColor = "var(--primary)";
+
+        if (avgTurn <= 30) {
+            insightTitle = "🚀 High Performance";
+            insightMsg = `Your team is operating at peak efficiency! Maintaining this <strong>${avgTurn} min</strong> average maximizes your daily case volume.`;
+            insightColor = "var(--success)";
+        }
+
+        titleEl.innerHTML = `⏱️ Turnover Analysis`;
         content = `
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
-                <div style="padding:15px; background:rgba(16, 185, 129, 0.1); border-radius:8px;">
-                    <strong style="color:var(--success)">Efficient Cases (< 25m)</strong>
-                    <div style="font-size:1.5rem; font-weight:700;">${fastCases}</div>
+            <div class="modal-stat-grid">
+                <div class="modal-stat-box">
+                    <div class="modal-stat-label" style="color:var(--success)">Efficient (<30m)</div>
+                    <div class="modal-stat-value" style="color:var(--success)">${fastCases}</div>
+                    <div style="font-size:0.8rem; opacity:0.7; margin-top:5px;">Cases</div>
                 </div>
-                <div style="padding:15px; background:rgba(239, 68, 68, 0.1); border-radius:8px;">
-                    <strong style="color:var(--danger)">Slow Cases (> 40m)</strong>
-                    <div style="font-size:1.5rem; font-weight:700;">${slowCases}</div>
+                <div class="modal-stat-box">
+                    <div class="modal-stat-label" style="color:var(--danger)">Slow (>50m)</div>
+                    <div class="modal-stat-value" style="color:var(--danger)">${slowCases}</div>
+                    <div style="font-size:0.8rem; opacity:0.7; margin-top:5px;">Cases</div>
                 </div>
             </div>
-            <p><strong>Insight:</strong> Reducing average turnover by 5 minutes could save approx. <strong>${Math.round(currentData.length * 5 / 60)} hours</strong> of OR time.</p>
+            
+            <div class="insight-box" style="border-left-color: ${insightColor}">
+                <strong style="color:${insightColor}">${insightTitle}</strong><br>
+                ${insightMsg}
+            </div>
         `;
     } 
     else if (type === 'duration') {
-        titleEl.textContent = '⚡ Surgery Duration Breakdown';
         const sorted = [...currentData].sort((a,b) => b.duration - a.duration);
         const longest = sorted[0];
         const shortest = sorted[sorted.length - 1];
+        const median = sorted[Math.floor(sorted.length/2)].duration;
+
+        titleEl.innerHTML = `⚡ Surgery Duration Breakdown`;
         content = `
-            <ul style="list-style:none; padding:0; line-height:2;">
-                <li><strong>Longest Surgery:</strong> ${longest.duration} min <span style="color:var(--secondary)">(${longest.procedure})</span></li>
-                <li><strong>Shortest Surgery:</strong> ${shortest.duration} min <span style="color:var(--secondary)">(${shortest.procedure})</span></li>
-                <li style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
-                    <strong>Median Duration:</strong> ${sorted[Math.floor(sorted.length/2)].duration} min
-                </li>
-            </ul>
+            <div class="duration-list">
+                <div class="duration-item">
+                    <div>
+                        <span class="duration-tag tag-long">Longest</span>
+                        <div style="font-weight:600; margin-top:5px;">${longest.procedure}</div>
+                    </div>
+                    <div style="font-size:1.2rem; font-weight:700;">${longest.duration}m</div>
+                </div>
+                <div class="duration-item">
+                    <div>
+                        <span class="duration-tag tag-med">Median</span>
+                        <div style="font-weight:600; margin-top:5px;">Typical Case Duration</div>
+                    </div>
+                    <div style="font-size:1.2rem; font-weight:700;">${median}m</div>
+                </div>
+                <div class="duration-item">
+                    <div>
+                        <span class="duration-tag tag-short">Shortest</span>
+                        <div style="font-weight:600; margin-top:5px;">${shortest.procedure}</div>
+                    </div>
+                    <div style="font-size:1.2rem; font-weight:700;">${shortest.duration}m</div>
+                </div>
+            </div>
         `;
     } 
     else if (type === 'cases') {
-        titleEl.textContent = '📄 Case Volume Stats';
-        const uniqueSurgeons = new Set(currentData.map(d => d.surgeon)).size;
+        // --- IMPROVED VOLUME ANALYSIS ---
+        const totalCases = currentData.length;
+        const uniqueServices = new Set(currentData.map(d => d.surgeon)).size;
         const uniqueProcs = new Set(currentData.map(d => d.procedure)).size;
+        
+        const totalDuration = currentData.reduce((acc, curr) => acc + curr.duration, 0);
+        const totalHours = (totalDuration / 60).toFixed(1); 
+        const avgCaseDuration = totalCases > 0 ? Math.round(totalDuration / totalCases) : 0;
+
+        titleEl.innerHTML = `📄 Case Volume Analysis`;
         content = `
-             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <div style="text-align:center;">
-                    <div style="font-size:1.8rem; font-weight:700; color:var(--primary);">${uniqueSurgeons}</div>
-                    <div style="font-size:0.85rem; color:var(--secondary);">Active Surgeons</div>
+            <div class="modal-stat-grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="modal-stat-box" style="background: rgba(37, 99, 235, 0.05); border-color: var(--primary);">
+                    <div class="modal-stat-label" style="color:var(--primary)">Total Cases</div>
+                    <div class="modal-stat-value" style="color:var(--primary); font-size: 2.2rem;">${totalCases}</div>
                 </div>
-                <div style="text-align:center;">
-                    <div style="font-size:1.8rem; font-weight:700; color:var(--primary);">${uniqueProcs}</div>
-                    <div style="font-size:0.85rem; color:var(--secondary);">Unique Procedures</div>
+                <div class="modal-stat-box">
+                    <div class="modal-stat-label">Total OR Time</div>
+                    <div class="modal-stat-value">${formatNum(totalHours)}<span style="font-size:1rem; color:var(--secondary);"> hrs</span></div>
+                </div>
+                <div class="modal-stat-box">
+                    <div class="modal-stat-label">Procedure Types</div>
+                    <div class="modal-stat-value">${uniqueProcs}</div>
+                </div>
+                <div class="modal-stat-box">
+                    <div class="modal-stat-label">Avg Case Dur.</div>
+                    <div class="modal-stat-value">${avgCaseDuration}<span style="font-size:1rem; color:var(--secondary);"> min</span></div>
                 </div>
             </div>
-            <p style="text-align:center; color:var(--secondary); font-size:0.9rem;">Displaying data for currently filtered date range.</p>
+            <p style="text-align:center; margin-top:10px; color:var(--secondary); font-size:0.85rem;">
+                <span style="display:inline-block; width:8px; height:8px; background:var(--primary); border-radius:50%; margin-right:5px;"></span>
+                Active Service Line: <strong>${uniqueServices === 1 ? currentData[0].surgeon : 'Multiple'}</strong>
+            </p>
         `;
     }
-
     bodyEl.innerHTML = content;
     modal.classList.remove('hidden');
 }
@@ -522,7 +691,7 @@ function showLeaderboard() {
 
 function exportToCSV() {
     if (!currentData.length) { alert("No data to export!"); return; }
-    const headers = ['Date', 'Procedure', 'Surgeon', 'Duration (min)', 'Turnover (min)'];
+    const headers = ['Date', 'Procedure', 'Service', 'Duration (min)', 'Turnover (min)'];
     const rows = currentData.map(row => {
         let dateStr = row.date instanceof Date ? row.date.toISOString().split('T')[0] : row.date;
         return [dateStr, `"${row.procedure}"`, `"${row.surgeon}"`, row.duration, row.turnover].join(',');
@@ -568,8 +737,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Controls
-document.getElementById('surgeon-filter')?.addEventListener('change', applyFilters);
+// Dependent Dropdown Listener
+document.getElementById('surgeon-filter')?.addEventListener('change', (e) => {
+    updateProcedureOptions(e.target.value);
+    applyFilters();
+});
+
 document.getElementById('search-input')?.addEventListener('change', applyFilters);
 document.getElementById('start-date')?.addEventListener('change', applyFilters);
 document.getElementById('end-date')?.addEventListener('change', applyFilters);
@@ -583,119 +756,26 @@ document.getElementById('clear-btn')?.addEventListener('click', () => {
     document.getElementById('search-input').value = '';
     document.getElementById('start-date').value = '';
     document.getElementById('end-date').value = '';
+    
+    // Reset dependent dropdown to full list
+    updateProcedureOptions('all');
+    
     currentPage = 1;
     applyFilters();
 });
 
-/* ==========================================
-   12. IMPROVED CARD DETAILS LOGIC
-   ========================================== */
-function openDetailModal(type) {
-    const modal = document.getElementById('details-modal');
-    const titleEl = document.getElementById('detail-modal-title');
-    const bodyEl = document.getElementById('detail-modal-body');
-    
-    if (!modal || !currentData.length) return;
+/* NEW: JUMP TO PAGE LISTENER */
+const pageInput = document.getElementById('page-input');
+if (pageInput) {
+    pageInput.addEventListener('change', (e) => {
+        let val = parseInt(e.target.value);
+        const totalPages = Math.ceil(currentData.length / rowsPerPage) || 1;
 
-    let content = '';
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > totalPages) val = totalPages;
 
-    // Helper to format numbers
-    const formatNum = (n) => new Intl.NumberFormat().format(n);
-
-    if (type === 'turnover') {
-        const fastCases = currentData.filter(d => d.turnover < 25).length;
-        const slowCases = currentData.filter(d => d.turnover > 40).length;
-        const savedHours = Math.round(currentData.length * 5 / 60);
-
-        titleEl.innerHTML = `⏱️ Turnover Analysis`;
-        
-        content = `
-            <div class="modal-stat-grid">
-                <div class="modal-stat-box">
-                    <div class="modal-stat-label" style="color:var(--success)">Efficient (<25m)</div>
-                    <div class="modal-stat-value" style="color:var(--success)">${fastCases}</div>
-                    <div style="font-size:0.8rem; opacity:0.7; margin-top:5px;">Cases</div>
-                </div>
-                <div class="modal-stat-box">
-                    <div class="modal-stat-label" style="color:var(--danger)">Slow (>40m)</div>
-                    <div class="modal-stat-value" style="color:var(--danger)">${slowCases}</div>
-                    <div style="font-size:0.8rem; opacity:0.7; margin-top:5px;">Cases</div>
-                </div>
-            </div>
-            
-            <div class="insight-box">
-                <strong style="color:var(--primary)">💡 Efficiency Insight</strong><br>
-                Reducing average turnover by just 5 minutes would save approximately <strong>${savedHours} hours</strong> of total Operating Room time.
-            </div>
-        `;
-    } 
-    else if (type === 'duration') {
-        const sorted = [...currentData].sort((a,b) => b.duration - a.duration);
-        const longest = sorted[0];
-        const shortest = sorted[sorted.length - 1];
-        const median = sorted[Math.floor(sorted.length/2)].duration;
-
-        titleEl.innerHTML = `⚡ Surgery Duration Breakdown`;
-
-        content = `
-            <div class="duration-list">
-                <div class="duration-item">
-                    <div>
-                        <span class="duration-tag tag-long">Longest</span>
-                        <div style="font-weight:600; margin-top:5px;">${longest.procedure}</div>
-                    </div>
-                    <div style="font-size:1.2rem; font-weight:700;">${longest.duration}m</div>
-                </div>
-
-                <div class="duration-item">
-                    <div>
-                        <span class="duration-tag tag-med">Median</span>
-                        <div style="font-weight:600; margin-top:5px;">Typical Case Duration</div>
-                    </div>
-                    <div style="font-size:1.2rem; font-weight:700;">${median}m</div>
-                </div>
-
-                <div class="duration-item">
-                    <div>
-                        <span class="duration-tag tag-short">Shortest</span>
-                        <div style="font-weight:600; margin-top:5px;">${shortest.procedure}</div>
-                    </div>
-                    <div style="font-size:1.2rem; font-weight:700;">${shortest.duration}m</div>
-                </div>
-            </div>
-        `;
-    } 
-    else if (type === 'cases') {
-        const uniqueSurgeons = new Set(currentData.map(d => d.surgeon)).size;
-        const uniqueProcs = new Set(currentData.map(d => d.procedure)).size;
-        const totalDuration = currentData.reduce((acc, curr) => acc + curr.duration, 0);
-        const totalHours = Math.round(totalDuration / 60);
-
-        titleEl.innerHTML = `📄 Case Volume Stats`;
-
-        content = `
-             <div class="modal-stat-grid">
-                <div class="modal-stat-box">
-                    <div class="modal-stat-label">Surgeons</div>
-                    <div class="modal-stat-value" style="color:var(--primary)">${uniqueSurgeons}</div>
-                </div>
-                <div class="modal-stat-box">
-                    <div class="modal-stat-label">Procedures</div>
-                    <div class="modal-stat-value" style="color:var(--primary)">${uniqueProcs}</div>
-                </div>
-            </div>
-
-            <div style="text-align:center; padding: 20px; background:var(--background); border-radius:12px; border:1px solid var(--border);">
-                <div style="font-size:0.9rem; color:var(--secondary); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Total OR Time Used</div>
-                <div style="font-size:2.5rem; font-weight:800; color:var(--text-main);">${formatNum(totalHours)} <span style="font-size:1rem; font-weight:500; color:var(--secondary);">hours</span></div>
-            </div>
-            
-            <p style="text-align:center; margin-top:20px; color:var(--secondary); font-size:0.85rem;">
-                Displaying data for currently active filters.
-            </p>
-        `;
-    }
-
-    bodyEl.innerHTML = content;
-    modal.classList.remove('hidden');
+        currentPage = val;
+        renderDashboard();
+        e.target.blur(); 
+    });
 }

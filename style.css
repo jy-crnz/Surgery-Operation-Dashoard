@@ -20,29 +20,18 @@
     --input-border: transparent;
 }
 
-/* DARK MODE OVERRIDES (Refined for Better Contrast) */
+/* DARK MODE OVERRIDES */
 [data-theme="dark"] {
-    /* Brighter blue for better contrast against dark bg */
     --primary: #60a5fa;       
     --primary-dark: #3b82f6;  
-    
-    /* Much lighter gray for secondary text */
     --secondary: #cbd5e1;     
-    
-    /* Soft pastel red/green - easier to read than dark red/green */
     --success: #34d399;       
     --danger: #f87171;        
-    
-    /* Deep slate background */
     --background: #0f172a;    
     --card-bg: #1e293b;       
     --text-main: #f8fafc;     
-    
-    /* Lighter borders to define sections */
     --border: #334155;        
     --shadow: rgba(0, 0, 0, 0.5);
-
-    /* Inputs: slightly lighter than card to stand out */
     --input-bg: #334155;      
     --input-text: #ffffff;    
     --input-border: #475569;
@@ -50,13 +39,17 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+    overflow-x: hidden; 
+    width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--background);
     color: var(--text-main);
     margin: 0; padding: 0; 
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
 }
 
 /* =========================================
@@ -150,11 +143,11 @@ body {
     display: flex; 
     gap: 12px; 
     align-items: center; 
-    flex-wrap: wrap; 
+    /* CHANGED: Forces single line layout */
+    flex-wrap: nowrap; 
     width: 100%; 
 }
 
-/* UNIFIED INPUT STYLE (Works for Text & Select) */
 .control-input {
     height: 42px;
     padding: 0 15px;
@@ -166,21 +159,22 @@ body {
     font-weight: 500;
     outline: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    min-width: 140px;
+    min-width: 120px; /* Slightly reduced min-width for flexibility */
     transition: all 0.2s ease;
 }
 .control-input:focus {
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5); border-color: #3b82f6;
 }
 
-.date-group { display: flex; align-items: center; gap: 8px; }
-.search-box { flex-grow: 1; min-width: 200px; }
+.date-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.search-box { flex-grow: 1; min-width: 150px; }
 
 /* Action Group (Clear & Export) */
 .action-group { 
     display: flex; 
     gap: 12px; 
     margin-left: auto; 
+    flex-shrink: 0; /* Prevents buttons from being pushed out */
 }
 
 /* BUTTONS */
@@ -189,6 +183,9 @@ body {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     border: none; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 0 20px; 
+    /* NEW: Prevents text wrapping and button shrinking */
+    white-space: nowrap; 
+    flex-shrink: 0;
 }
 .icon-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
 .btn-text { display: inline-block; }
@@ -214,9 +211,14 @@ body {
 .container {
     max-width: 1200px; margin: 0 auto; padding: 0 20px 40px 20px;
     display: grid; gap: 24px;
-    grid-template-areas: "stat1 stat2 stat3" "chart1 chart1 chart2" "table table table";
+    grid-template-areas: 
+        "stat1 stat2 stat3" 
+        "chart1 chart1 chart2" 
+        "chart3 chart3 chart3" 
+        "table table table";
     grid-template-columns: 1fr 1fr 1fr;
 }
+
 .card {
     background: var(--card-bg); border-radius: 16px; padding: 24px;
     box-shadow: 0 4px 6px -1px var(--shadow); border: 1px solid var(--border);
@@ -225,7 +227,6 @@ body {
 /* Stat Cards (Interactive) */
 .stat-card { 
     display: flex; justify-content: space-between; align-items: flex-start;
-    /* NEW: Interaction Styles */
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -260,6 +261,7 @@ h2, h3 { margin-top: 0; font-size: 0.85rem; color: var(--secondary); text-transf
 
 .chart-section { grid-area: chart1; }
 .chart-donut { grid-area: chart2; }
+.chart-line { grid-area: chart3; }
 .chart-container { position: relative; height: 300px; width: 100%; }
 
 /* =========================================
@@ -267,6 +269,8 @@ h2, h3 { margin-top: 0; font-size: 0.85rem; color: var(--secondary); text-transf
    ========================================= */
 .data-section { grid-area: table; padding: 0; overflow: hidden; } 
 .data-section h2 { padding: 24px 24px 0 24px; }
+
+/* The Key to Mobile Scrolling */
 .table-wrapper { 
     overflow-x: auto; width: 100%; margin-top: 20px; 
     max-height: 500px; -webkit-overflow-scrolling: touch; 
@@ -284,12 +288,11 @@ th:hover { color: var(--text-main); }
 td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
 .high-alert { color: var(--danger); font-weight: 700; }
 
-/* NEW: Table Hover Effects */
 tbody tr { transition: background-color 0.2s ease; }
 tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
 [data-theme="dark"] tbody tr:hover { background-color: rgba(255, 255, 255, 0.05); }
 
-/* PAGINATION */
+/* PAGINATION - Container */
 .pagination-container {
     display: flex; justify-content: center; align-items: center; gap: 20px;
     padding: 20px; border-top: 1px solid var(--border);
@@ -300,10 +303,29 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
 }
 .page-btn:hover:not(:disabled) { background-color: var(--primary); color: white; border-color: var(--primary); }
 .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-#page-info { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+
+/* NEW: PAGINATION INPUT STYLES */
+.page-input-group {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.9rem; color: var(--secondary); font-weight: 600;
+}
+#page-input {
+    width: 50px; height: 32px; text-align: center;
+    border: 1px solid var(--border); border-radius: 6px;
+    background-color: var(--input-bg); color: var(--text-main);
+    font-weight: 600; font-size: 0.9rem; outline: none; transition: border-color 0.2s;
+}
+#page-input:focus {
+    border-color: var(--primary); box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+#page-input::-webkit-outer-spin-button,
+#page-input::-webkit-inner-spin-button {
+    -webkit-appearance: none; margin: 0;
+}
+#page-input { -moz-appearance: textfield; }
 
 /* =========================================
-   7. MODAL STYLES (Info, Leaderboard, Details)
+   7. MODAL STYLES
    ========================================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -316,26 +338,33 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
 
 .modal-content {
     background: var(--card-bg); width: 90%; max-width: 500px;
-    border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    max-height: 85vh; 
+    display: flex; flex-direction: column;
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     border: 1px solid var(--border);
     transform: translateY(0); transition: transform 0.3s ease;
-    padding-bottom: 10px;
 }
 .modal-overlay.hidden .modal-content { transform: translateY(20px); }
 
 .modal-header {
+    background: var(--background);
     display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 24px; border-bottom: 1px solid var(--border);
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+    flex-shrink: 0; 
 }
-.modal-header h3 { margin: 0; color: var(--text-main); font-size: 1.1rem; }
+.modal-header h3 { margin: 0; color: var(--text-main); font-size: 1.1rem; letter-spacing: 0.5px; }
 
 .close-modal {
     background: none; border: none; font-size: 1.5rem; color: var(--secondary); cursor: pointer;
 }
 .close-modal:hover { color: var(--danger); }
-.modal-body { padding: 24px; color: var(--text-main); line-height: 1.6; }
 
-/* LEADERBOARD SPECIFIC */
+.modal-body { 
+    padding: 24px; color: var(--text-main); line-height: 1.6;
+    overflow-y: auto; flex-grow: 1;
+}
+
 .leaderboard-row {
     display: flex; align-items: center; justify-content: space-between;
     padding: 12px 10px; border-bottom: 1px solid var(--border);
@@ -350,18 +379,60 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
 }
 .lb-name { flex-grow: 1; font-weight: 600; font-size: 0.95rem; }
 .lb-stat { font-weight: 700; color: var(--primary); font-size: 0.95rem; }
+.rank-1 { background: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.4); } 
+.rank-2 { background: #94a3b8; } 
+.rank-3 { background: #b45309; } 
 
-/* Rank Badges */
-.rank-1 { background: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.4); } /* Gold */
-.rank-2 { background: #94a3b8; } /* Silver */
-.rank-3 { background: #b45309; } /* Bronze */
+.modal-stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
+}
+.modal-stat-box {
+    background: var(--background);
+    padding: 16px; border-radius: 12px; border: 1px solid var(--border);
+    text-align: center; transition: transform 0.2s;
+}
+.modal-stat-box:hover { transform: translateY(-2px); border-color: var(--primary); }
+.modal-stat-label {
+    font-size: 0.8rem; font-weight: 600; color: var(--secondary);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+}
+.modal-stat-value { font-size: 2rem; font-weight: 800; line-height: 1; }
+
+.insight-box {
+    background: linear-gradient(to right, rgba(37, 99, 235, 0.05), transparent);
+    border-left: 4px solid var(--primary);
+    padding: 16px; border-radius: 0 8px 8px 0;
+    font-size: 0.95rem; color: var(--text-main);
+}
+
+.duration-list { display: flex; flex-direction: column; gap: 12px; }
+.duration-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px; background: var(--background);
+    border-radius: 8px; border: 1px solid var(--border);
+}
+.duration-tag {
+    font-size: 0.75rem; padding: 4px 8px; border-radius: 4px;
+    font-weight: 700; text-transform: uppercase;
+}
+.tag-long { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+.tag-short { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+.tag-med { background: rgba(37, 99, 235, 0.15); color: var(--primary); }
+
+[data-theme="dark"] .modal-stat-box { background: rgba(255, 255, 255, 0.03); }
 
 /* =========================================
    8. MOBILE RESPONSIVENESS
    ========================================= */
 @media (max-width: 900px) {
     .container {
-        grid-template-areas: "stat1 stat2" "stat3 stat3" "chart1 chart1" "chart2 chart2" "table table";
+        grid-template-areas: 
+            "stat1 stat2" 
+            "stat3 stat3" 
+            "chart1 chart1" 
+            "chart2 chart2" 
+            "chart3 chart3"
+            "table table";
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -369,7 +440,6 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
 @media (max-width: 768px) {
     .hero-section { padding: 25px 15px; } 
     
-    /* Header */
     .header-top { flex-direction: column; align-items: flex-start; margin-bottom: 25px; }
     .header-left { flex-direction: column; align-items: flex-start; width: 100%; gap: 10px; }
     .header-right { width: 100%; justify-content: flex-start; margin-top: 15px; flex-wrap: wrap; }
@@ -378,7 +448,6 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
     .header-text h1 { font-size: 1.3rem; line-height: 1.3; }
     .header-text p { font-size: 0.9rem; margin-top: 5px; }
     
-    /* Controls Stack */
     .controls-container { flex-direction: column; align-items: stretch; gap: 12px; }
     .action-group { margin-left: 0; justify-content: space-between; }
     .icon-btn { flex: 1; justify-content: center; }
@@ -387,9 +456,11 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
     .date-group input { width: 48%; }
     .search-box { width: 100%; }
 
-    /* Grid */
     .container {
-        grid-template-areas: "stat1" "stat2" "stat3" "chart1" "chart2" "table";
+        grid-template-areas: 
+            "stat1" "stat2" "stat3" 
+            "chart1" "chart2" "chart3" 
+            "table";
         grid-template-columns: 1fr; padding: 15px; gap: 16px;
     }
     .big-number { font-size: 1.8rem; }
@@ -400,126 +471,12 @@ tbody tr:hover { background-color: rgba(37, 99, 235, 0.05); }
 }
 
 /* =========================================
-   9. CUSTOM SCROLLBAR (New)
+   9. CUSTOM SCROLLBAR
    ========================================= */
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-::-webkit-scrollbar-track {
-    background: var(--background); 
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--background); }
 ::-webkit-scrollbar-thumb {
     background: var(--secondary); 
-    border-radius: 5px;
-    border: 2px solid var(--background);
+    border-radius: 5px; border: 2px solid var(--background);
 }
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary); 
-}
-
-/* =========================================
-   10. IMPROVED MODAL DESIGN
-   ========================================= */
-
-/* Make the modal popup look cleaner and more modern */
-.modal-content {
-    border: 1px solid var(--border);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    overflow: hidden; /* Keeps content inside rounded corners */
-}
-
-.modal-header {
-    background: var(--background); /* Slightly different shade than body */
-    border-bottom: 1px solid var(--border);
-    padding: 20px 24px;
-}
-
-.modal-header h3 {
-    font-size: 1.1rem;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* The Grid Layout for Stats inside Modals */
-.modal-stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.modal-stat-box {
-    background: var(--background);
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    text-align: center;
-    transition: transform 0.2s;
-}
-
-.modal-stat-box:hover {
-    transform: translateY(-2px);
-    border-color: var(--primary);
-}
-
-.modal-stat-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.modal-stat-value {
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1;
-}
-
-/* Insight Box Styling */
-.insight-box {
-    background: linear-gradient(to right, rgba(37, 99, 235, 0.05), transparent);
-    border-left: 4px solid var(--primary);
-    padding: 16px;
-    border-radius: 0 8px 8px 0;
-    font-size: 0.95rem;
-    color: var(--text-main);
-}
-
-/* List Styling for Duration */
-.duration-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.duration-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background: var(--background);
-    border-radius: 8px;
-    border: 1px solid var(--border);
-}
-
-.duration-tag {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.tag-long { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-.tag-short { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-.tag-med { background: rgba(37, 99, 235, 0.15); color: var(--primary); }
-
-/* Dark Mode Specific Tweaks */
-[data-theme="dark"] .modal-stat-box {
-    background: rgba(255, 255, 255, 0.03); /* Subtle glass effect */
-}
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }

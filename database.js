@@ -1,328 +1,328 @@
-const csvData = `Procedure,Surgeon,Duration,Turnover
-Thyroidectomy,Dr. Santos,100,33
-Total Knee Arthroplasty,Dr. Reyes,118,23
-Colectomy,Dr. Cruz,158,49
-Laparoscopic Cholecystectomy,Dr. Reyes,71,15
-Cataract Surgery,Dr. Garcia,24,32
-Lumbar Spinal Fusion,Dr. Tan,215,31
-Laparoscopic Cholecystectomy,Dr. Ramos,58,25
-Lumbar Spinal Fusion,Dr. Santos,174,15
-Cataract Surgery,Dr. Santos,18,15
-Thyroidectomy,Dr. Reyes,88,25
-Hernia Repair,Dr. Santos,54,22
-Septoplasty,Dr. Garcia,56,43
-Septoplasty,Dr. Mendoza,55,38
-Laparoscopic Cholecystectomy,Dr. Mendoza,50,17
-Hernia Repair,Dr. Tan,68,15
-Carpal Tunnel Release,Dr. Santos,31,29
-Coronary Artery Bypass Graft,Dr. Mendoza,257,15
-Laparoscopic Cholecystectomy,Dr. Tan,69,46
-Coronary Artery Bypass Graft,Dr. Mendoza,195,39
-Coronary Artery Bypass Graft,Dr. Ramos,219,18
-Laparoscopic Cholecystectomy,Dr. Ocampo,65,39
-Thyroidectomy,Dr. Ocampo,67,17
-Carpal Tunnel Release,Dr. Tan,22,25
-Laparoscopic Cholecystectomy,Dr. Cruz,44,30
-Cataract Surgery,Dr. Santos,15,15
-Lumbar Spinal Fusion,Dr. Ramos,204,90
-Laparoscopic Cholecystectomy,Dr. Ramos,50,25
-Septoplasty,Dr. Dizon,55,31
-Laparoscopic Cholecystectomy,Dr. Reyes,57,31
-Coronary Artery Bypass Graft,Dr. Dizon,210,41
-Colectomy,Dr. Dizon,160,29
-"Total Knee Arthroplasty, Left",Dr. Reyes,99,15
-Lumbar Spinal Fusion,Dr. Dizon,161,79
-Cataract Surgery,Dr. Ramos,21,30
-Colectomy,Dr. Tan,94,25
-Hernia Repair,Dr. Ramos,42,32
-Tonsillectomy,Dr. Ocampo,36,32
-Lumbar Spinal Fusion,Dr. Cruz,196,28
-Hysterectomy,Dr. Cruz,105,35
-Septoplasty,Dr. Ocampo,50,40
-Coronary Artery Bypass Graft,Dr. Santos,309,15
-Laparoscopic Cholecystectomy,Dr. Ramos,81,15
-Tonsillectomy,Dr. Santos,30,20
-Carpal Tunnel Release,Dr. Ocampo,39,58
-Carpal Tunnel Release,Dr. Santos,22,20
-"Hernia Repair, Inguinal",Dr. Mendoza,67,15
-Hysterectomy,Dr. Dizon,87,15
-Coronary Artery Bypass Graft,Dr. Tan,261,59
-Laparoscopic Cholecystectomy,Dr. Lopez,75,28
-Cataract Surgery,Dr. Ramos,24,52
-"Total Hip Arthroplasty, Right",Dr. Cruz,138,15
-Total Hip Arthroplasty,Dr. Ocampo,103,56
-Hernia Repair,Dr. Cruz,61,28
-Hernia Repair,Dr. Mendoza,79,15
-Appendectomy,Dr. Mendoza,64,24
-Cataract Surgery,Dr. Ramos,24,28
-Cataract Surgery,Dr. Santos,21,22
-Mastectomy,Dr. Ocampo,84,76
-Lumbar Spinal Fusion,Dr. Ramos,156,15
-Colectomy,Dr. Garcia,136,28
-Hysterectomy,Dr. Dizon,90,33
-Carpal Tunnel Release,Dr. Dizon,23,47
-Coronary Artery Bypass Graft,Dr. Santos,218,15
-Total Hip Arthroplasty,Dr. Lopez,97,33
-Thyroidectomy,Dr. Ramos,78,26
-Hysterectomy,Dr. Lopez,93,18
-Thyroidectomy,Dr. Cruz,72,48
-Cataract Surgery,Dr. Reyes,21,22
-Mastectomy,Dr. Dizon,94,15
-Hysterectomy,Dr. Ocampo,100,27
-Lumbar Spinal Fusion,Dr. Tan,151,52
-Tonsillectomy,Dr. Mendoza,26,15
-Thyroidectomy,Dr. Mendoza,95,21
-Tonsillectomy,Dr. Reyes,35,37
-Hernia Repair,Dr. Santos,41,51
-Laparoscopic Cholecystectomy,Dr. Garcia,49,41
-Appendectomy,Dr. Ocampo,49,15
-Colectomy,Dr. Lopez,123,26
-Lumbar Spinal Fusion,Dr. Mendoza,194,19
-Tonsillectomy,Dr. Cruz,25,35
-Lumbar Spinal Fusion,Dr. Reyes,215,15
-Septoplasty,Dr. Ocampo,49,16
-Cataract Surgery,Dr. Tan,19,15
-Cataract Surgery,Dr. Lopez,21,36
-Tonsillectomy,Dr. Garcia,27,39
-Carpal Tunnel Release,Dr. Garcia,27,33
-Hysterectomy,Dr. Santos,82,16
-Lumbar Spinal Fusion,Dr. Ramos,147,15
-Appendectomy,Dr. Lopez,38,15
-Hysterectomy,Dr. Mendoza,67,40
-Thyroidectomy,Dr. Cruz,81,15
-Coronary Artery Bypass Graft,Dr. Ocampo,209,19
-"Total Knee Arthroplasty, Left",Dr. Reyes,119,55
-Tonsillectomy,Dr. Cruz,26,23
-Coronary Artery Bypass Graft,Dr. Tan,228,55
-Hysterectomy,Dr. Santos,81,24
-Tonsillectomy,Dr. Reyes,24,16
-Total Knee Arthroplasty,Dr. Dizon,127,27
-Coronary Artery Bypass Graft,Dr. Ramos,245,15
-Mastectomy,Dr. Tan,85,15
-Cataract Surgery,Dr. Santos,17,25
-Hernia Repair,Dr. Reyes,50,15
-Total Knee Arthroplasty,Dr. Santos,98,53
-Hernia Repair,Dr. Reyes,38,15
-Total Knee Arthroplasty,Dr. Garcia,125,29
-Appendectomy,Dr. Lopez,70,15
-Coronary Artery Bypass Graft,Dr. Reyes,272,15
-Total Knee Arthroplasty,Dr. Ramos,120,15
-Appendectomy,Dr. Tan,47,31
-Total Hip Arthroplasty,Dr. Ocampo,130,15
-Hysterectomy,Dr. Cruz,97,15
-Hernia Repair,Dr. Ocampo,49,15
-Hernia Repair,Dr. Mendoza,64,30
-Colectomy,Dr. Tan,140,21
-Hysterectomy,Dr. Garcia,94,19
-Appendectomy,Dr. Ramos,34,19
-Colectomy,Dr. Tan,129,15
-Appendectomy,Dr. Reyes,30,15
-Laparoscopic Cholecystectomy,Dr. Lopez,60,31
-Total Knee Arthroplasty,Dr. Mendoza,111,15
-Colectomy,Dr. Ocampo,123,48
-Tonsillectomy,Dr. Cruz,23,20
-Total Knee Arthroplasty,Dr. Garcia,99,15
-Coronary Artery Bypass Graft,Dr. Dizon,305,26
-Laparoscopic Cholecystectomy,Dr. Santos,106,15
-Mastectomy,Dr. Garcia,109,55
-Mastectomy,Dr. Dizon,121,15
-Mastectomy,Dr. Garcia,75,27
-Total Hip Arthroplasty,Dr. Ocampo,144,21
-Coronary Artery Bypass Graft,Dr. Ramos,245,15
-Laparoscopic Cholecystectomy,Dr. Mendoza,68,21
-Cataract Surgery,Dr. Garcia,23,15
-Total Hip Arthroplasty,Dr. Lopez,110,46
-Coronary Artery Bypass Graft,Dr. Ramos,253,62
-Appendectomy,Dr. Reyes,51,17
-Carpal Tunnel Release,Dr. Ocampo,16,35
-Hysterectomy,Dr. Garcia,92,15
-Tonsillectomy,Dr. Ramos,29,18
-Total Knee Arthroplasty,Dr. Ocampo,128,15
-Septoplasty,Dr. Dizon,60,15
-Carpal Tunnel Release,Dr. Dizon,42,19
-Cataract Surgery,Dr. Garcia,29,53
-Hysterectomy,Dr. Ocampo,105,32
-Tonsillectomy,Dr. Cruz,31,61
-Laparoscopic Cholecystectomy,Dr. Tan,46,15
-Tonsillectomy,Dr. Ramos,29,39
-Carpal Tunnel Release,Dr. Tan,29,39
-Laparoscopic Cholecystectomy,Dr. Reyes,41,15
-Septoplasty,Dr. Tan,67,20
-Total Knee Arthroplasty,Dr. Cruz,135,20
-Appendectomy,Dr. Ramos,46,28
-Colectomy,Dr. Tan,121,51
-Septoplasty,Dr. Garcia,57,68
-Tonsillectomy,Dr. Lopez,33,15
-Colectomy,Dr. Lopez,134,18
-Laparoscopic Cholecystectomy,Dr. Dizon,61,24
-Thyroidectomy,Dr. Cruz,81,18
-Total Hip Arthroplasty,Dr. Santos,90,15
-Cataract Surgery,Dr. Lopez,15,15
-Total Knee Arthroplasty,Dr. Reyes,125,25
-Tonsillectomy,Dr. Cruz,33,29
-Septoplasty,Dr. Ocampo,67,43
-Hernia Repair,Dr. Mendoza,45,15
-Carpal Tunnel Release,Dr. Tan,28,18
-Appendectomy,Dr. Ocampo,44,53
-Hernia Repair,Dr. Cruz,59,15
-Total Knee Arthroplasty,Dr. Dizon,117,15
-Septoplasty,Dr. Cruz,68,15
-Cataract Surgery,Dr. Cruz,21,41
-Total Knee Arthroplasty,Dr. Tan,108,53
-Septoplasty,Dr. Tan,55,22
-Hysterectomy,Dr. Tan,90,15
-Total Knee Arthroplasty,Dr. Mendoza,122,54
-Appendectomy,Dr. Ramos,41,18
-Mastectomy,Dr. Lopez,92,45
-Cataract Surgery,Dr. Reyes,25,16
-Laparoscopic Cholecystectomy,Dr. Garcia,63,22
-Lumbar Spinal Fusion,Dr. Dizon,185,42
-Carpal Tunnel Release,Dr. Santos,35,15
-Septoplasty,Dr. Mendoza,52,28
-Thyroidectomy,Dr. Ocampo,75,30
-Total Knee Arthroplasty,Dr. Tan,115,20
-Colectomy,Dr. Cruz,145,35
-Hernia Repair,Dr. Lopez,58,25
-Tonsillectomy,Dr. Garcia,28,19
-Coronary Artery Bypass Graft,Dr. Reyes,240,50
-Hysterectomy,Dr. Dizon,88,29
-Carpal Tunnel Release,Dr. Cruz,21,15
-Total Hip Arthroplasty,Dr. Ramos,125,40
-Mastectomy,Dr. Santos,95,33
-Appendectomy,Dr. Tan,49,20
-Laparoscopic Cholecystectomy,Dr. Ocampo,55,18
-Thyroidectomy,Dr. Garcia,82,31
-Lumbar Spinal Fusion,Dr. Mendoza,205,60
-Cataract Surgery,Dr. Dizon,20,15
-Hernia Repair,Dr. Reyes,47,15
-Septoplasty,Dr. Lopez,60,35
-Colectomy,Dr. Ramos,132,41
-Total Knee Arthroplasty,Dr. Cruz,119,30
-Tonsillectomy,Dr. Ocampo,34,25
-Coronary Artery Bypass Graft,Dr. Garcia,230,48
-Hysterectomy,Dr. Reyes,95,22
-Carpal Tunnel Release,Dr. Mendoza,25,17
-Appendectomy,Dr. Santos,37,15
-Mastectomy,Dr. Tan,100,50
-Laparoscopic Cholecystectomy,Dr. Dizon,59,27
-Thyroidectomy,Dr. Lopez,88,23
-Lumbar Spinal Fusion,Dr. Cruz,190,55
-Cataract Surgery,Dr. Ocampo,22,15
-Hernia Repair,Dr. Garcia,53,26
-Septoplasty,Dr. Reyes,58,32
-Colectomy,Dr. Mendoza,138,37
-Total Knee Arthroplasty,Dr. Santos,105,25
-Tonsillectomy,Dr. Tan,30,21
-Coronary Artery Bypass Graft,Dr. Cruz,255,52
-Hysterectomy,Dr. Lopez,91,28
-Carpal Tunnel Release,Dr. Ramos,26,20
-Appendectomy,Dr. Garcia,43,15
-Mastectomy,Dr. Dizon,110,40
-Laparoscopic Cholecystectomy,Dr. Reyes,62,19
-Thyroidectomy,Dr. Tan,79,25
-Lumbar Spinal Fusion,Dr. Santos,198,45
-Cataract Surgery,Dr. Mendoza,18,15
-Hernia Repair,Dr. Ocampo,50,23
-Septoplasty,Dr. Cruz,54,30
-Colectomy,Dr. Dizon,152,44
-Total Knee Arthroplasty,Dr. Lopez,121,32
-Tonsillectomy,Dr. Reyes,32,17
-Coronary Artery Bypass Graft,Dr. Ramos,225,45
-Hysterectomy,Dr. Tan,93,24
-Carpal Tunnel Release,Dr. Ocampo,24,18
-Appendectomy,Dr. Cruz,39,15
-Mastectomy,Dr. Garcia,98,38
-Laparoscopic Cholecystectomy,Dr. Santos,56,16
-Thyroidectomy,Dr. Reyes,85,28
-Lumbar Spinal Fusion,Dr. Garcia,188,50
-Cataract Surgery,Dr. Tan,23,15
-Hernia Repair,Dr. Dizon,55,24
-Septoplasty,Dr. Ramos,61,33
-Colectomy,Dr. Ocampo,129,39
-Total Knee Arthroplasty,Dr. Mendoza,112,27
-Tonsillectomy,Dr. Santos,31,22
-Coronary Artery Bypass Graft,Dr. Lopez,235,49
-Hysterectomy,Dr. Cruz,89,26
-Carpal Tunnel Release,Dr. Garcia,22,16
-Appendectomy,Dr. Dizon,45,19
-Mastectomy,Dr. Reyes,105,42
-Laparoscopic Cholecystectomy,Dr. Tan,65,23
-Thyroidectomy,Dr. Mendoza,92,34
-Lumbar Spinal Fusion,Dr. Ocampo,200,58
-Cataract Surgery,Dr. Cruz,19,15
-Hernia Repair,Dr. Ramos,48,21
-Septoplasty,Dr. Santos,59,31
-Colectomy,Dr. Garcia,142,46
-Total Knee Arthroplasty,Dr. Dizon,116,28
-Tonsillectomy,Dr. Lopez,27,18
-Coronary Artery Bypass Graft,Dr. Tan,248,55
-Hysterectomy,Dr. Ramos,96,30
-Carpal Tunnel Release,Dr. Reyes,28,19
-Appendectomy,Dr. Mendoza,40,16
-Mastectomy,Dr. Cruz,102,36
-Laparoscopic Cholecystectomy,Dr. Lopez,64,20
-Thyroidectomy,Dr. Dizon,76,26
-Lumbar Spinal Fusion,Dr. Reyes,195,48
-Cataract Surgery,Dr. Ramos,21,15
-Hernia Repair,Dr. Tan,52,29
-Septoplasty,Dr. Garcia,56,34
-Colectomy,Dr. Santos,135,40
-Total Knee Arthroplasty,Dr. Ocampo,110,24
-Tonsillectomy,Dr. Cruz,33,23
-Coronary Artery Bypass Graft,Dr. Mendoza,260,58
-Hysterectomy,Dr. Garcia,90,25
-Carpal Tunnel Release,Dr. Lopez,23,15
-Appendectomy,Dr. Reyes,42,17
-Mastectomy,Dr. Ramos,96,35
-Laparoscopic Cholecystectomy,Dr. Cruz,58,17
-Thyroidectomy,Dr. Santos,89,29
-Lumbar Spinal Fusion,Dr. Tan,202,53
-Cataract Surgery,Dr. Garcia,25,16
-Hernia Repair,Dr. Cruz,56,27
-Septoplasty,Dr. Ocampo,62,36
-Colectomy,Dr. Reyes,148,47
-Total Knee Arthroplasty,Dr. Garcia,123,31
-Tonsillectomy,Dr. Mendoza,29,20
-Coronary Artery Bypass Graft,Dr. Santos,242,53
-Hysterectomy,Dr. Dizon,92,27
-Carpal Tunnel Release,Dr. Tan,27,16
-Appendectomy,Dr. Lopez,36,15
-Mastectomy,Dr. Ocampo,108,44
-Laparoscopic Cholecystectomy,Dr. Ramos,60,21
-Thyroidectomy,Dr. Garcia,80,27
-Lumbar Spinal Fusion,Dr. Lopez,192,52
-Cataract Surgery,Dr. Santos,16,15
-Hernia Repair,Dr. Mendoza,49,22
-Septoplasty,Dr. Tan,57,30
-Colectomy,Dr. Cruz,139,42
-Total Knee Arthroplasty,Dr. Reyes,114,26
-Tonsillectomy,Dr. Dizon,30,19
-Coronary Artery Bypass Graft,Dr. Ocampo,238,51
-Hysterectomy,Dr. Santos,94,29
-Carpal Tunnel Release,Dr. Garcia,20,15
-Appendectomy,Dr. Ramos,44,18
-Mastectomy,Dr. Lopez,99,39
-Laparoscopic Cholecystectomy,Dr. Reyes,66,24
-Thyroidectomy,Dr. Tan,84,32
-Lumbar Spinal Fusion,Dr. Cruz,199,56
-Cataract Surgery,Dr. Reyes,24,15
-Hernia Repair,Dr. Dizon,51,25
-Septoplasty,Dr. Mendoza,53,29
-Colectomy,Dr. Tan,141,45
-Total Knee Arthroplasty,Dr. Ramos,118,29
-Tonsillectomy,Dr. Garcia,26,16
-Coronary Artery Bypass Graft,Dr. Dizon,250,56
-Hysterectomy,Dr. Ocampo,98,31
-Carpal Tunnel Release,Dr. Cruz,25,19
-Appendectomy,Dr. Santos,40,15
-Mastectomy,Dr. Mendoza,104,41
-Laparoscopic Cholecystectomy,Dr. Garcia,61,20
-Thyroidectomy,Dr. Lopez,77,24
-Lumbar Spinal Fusion,Dr. Ramos,193,49
-Cataract Surgery,Dr. Tan,20,15
-Hernia Repair,Dr. Santos,46,20
-Septoplasty,Dr. Reyes,60,32
-Colectomy,Dr. Lopez,133,38
-Total Knee Arthroplasty,Dr. Cruz,120,33
-Tonsillectomy,Dr. Ocampo,32,24
-Coronary Artery Bypass Graft,Dr. Garcia,228,47`;
+const csvData = `index,Encounter ID,Date,OR Suite,Service,CPT Code,CPT Description,Booked Time (min),OR Schedule,Wheels In,Start Time,End Time,Wheels Out
+0,10001,01/03/22,1,Podiatry,28110,"Partial ostectomy, fifth metatarsal head",90,01/03/22 07:00 AM,01/03/22 07:05 AM,01/03/22 07:32 AM,01/03/22 09:05 AM,01/03/22 09:17 AM
+1,10002,01/03/22,1,Podiatry,28055,"Neurectomy, intrinsic musculature of foot",60,01/03/22 08:45 AM,01/03/22 09:48 AM,01/03/22 10:13 AM,01/03/22 11:01 AM,01/03/22 11:12 AM
+2,10003,01/03/22,1,Podiatry,28297,Lapidus bunionectomy,150,01/03/22 10:00 AM,01/03/22 11:50 AM,01/03/22 12:20 PM,01/03/22 12:42 PM,01/03/22 12:58 PM
+3,10004,01/03/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/03/22 12:45 PM,01/03/22 01:29 PM,01/03/22 01:53 PM,01/03/22 02:50 PM,01/03/22 03:02 PM
+4,10005,01/03/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/03/22 07:00 AM,01/03/22 07:15 AM,01/03/22 07:50 AM,01/03/22 09:38 AM,01/03/22 09:51 AM
+5,10006,01/03/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/03/22 09:15 AM,01/03/22 10:25 AM,01/03/22 10:55 AM,01/03/22 12:47 PM,01/03/22 01:03 PM
+6,10007,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 07:00 AM,01/03/22 07:03 AM,01/03/22 07:29 AM,01/03/22 07:42 AM,01/03/22 07:51 AM
+7,10008,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 08:00 AM,01/03/22 08:00 AM,01/03/22 08:26 AM,01/03/22 08:39 AM,01/03/22 08:49 AM
+8,10009,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 09:00 AM,01/03/22 09:04 AM,01/03/22 09:28 AM,01/03/22 09:41 AM,01/03/22 09:50 AM
+9,10010,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 10:00 AM,01/03/22 10:01 AM,01/03/22 10:23 AM,01/03/22 10:35 AM,01/03/22 10:44 AM
+10,10011,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 11:00 AM,01/03/22 10:56 AM,01/03/22 11:23 AM,01/03/22 11:36 AM,01/03/22 11:45 AM
+11,10012,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 12:00 PM,01/03/22 11:49 AM,01/03/22 12:15 PM,01/03/22 12:30 PM,01/03/22 12:38 PM
+12,10013,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 01:00 PM,01/03/22 12:55 PM,01/03/22 01:22 PM,01/03/22 01:35 PM,01/03/22 01:46 PM
+13,10014,01/03/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/03/22 02:00 PM,01/03/22 01:50 PM,01/03/22 02:16 PM,01/03/22 02:30 PM,01/03/22 02:39 PM
+14,10015,01/03/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/03/22 07:00 AM,01/03/22 07:03 AM,01/03/22 07:37 AM,01/03/22 08:35 AM,01/03/22 08:52 AM
+15,10016,01/03/22,4,OBGYN,57460,Cervical biopsy,75,01/03/22 09:15 AM,01/03/22 09:28 AM,01/03/22 09:59 AM,01/03/22 10:18 AM,01/03/22 10:27 AM
+16,10017,01/03/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/03/22 10:45 AM,01/03/22 11:18 AM,01/03/22 11:53 AM,01/03/22 12:35 PM,01/03/22 12:47 PM
+17,10018,01/03/22,4,OBGYN,57460,Cervical biopsy,75,01/03/22 01:00 PM,01/03/22 01:39 PM,01/03/22 02:08 PM,01/03/22 02:30 PM,01/03/22 02:39 PM
+18,10019,01/03/22,5,Urology,55250,Vasectomy,60,01/03/22 07:00 AM,01/03/22 07:08 AM,01/03/22 07:34 AM,01/03/22 07:53 AM,01/03/22 08:03 AM
+19,10020,01/03/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/03/22 08:15 AM,01/03/22 08:39 AM,01/03/22 09:05 AM,01/03/22 09:32 AM,01/03/22 09:41 AM
+20,10021,01/03/22,5,Urology,52353,Cystourethroscopy,60,01/03/22 10:00 AM,01/03/22 10:56 AM,01/03/22 11:22 AM,01/03/22 11:41 AM,01/03/22 11:51 AM
+21,10022,01/03/22,5,Urology,55250,Vasectomy,60,01/03/22 11:15 AM,01/03/22 12:45 PM,01/03/22 01:13 PM,01/03/22 01:34 PM,01/03/22 01:43 PM
+22,10023,01/03/22,6,Plastic,15773,Liposuction,180,01/03/22 07:00 AM,01/03/22 07:28 AM,01/03/22 08:04 AM,01/03/22 09:35 AM,01/03/22 09:49 AM
+23,10024,01/03/22,6,Plastic,15773,Liposuction,180,01/03/22 10:15 AM,01/03/22 10:22 AM,01/03/22 10:59 AM,01/03/22 12:28 PM,01/03/22 12:43 PM
+24,10025,01/03/22,6,Plastic,30400,Rhinoplasty,120,01/03/22 01:30 PM,01/03/22 01:44 PM,01/03/22 02:18 PM,01/03/22 03:22 PM,01/03/22 03:36 PM
+25,10026,01/03/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/03/22 07:00 AM,01/03/22 07:10 AM,01/03/22 07:37 AM,01/03/22 07:56 AM,01/03/22 08:05 AM
+26,10027,01/03/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/03/22 08:15 AM,01/03/22 08:38 AM,01/03/22 09:05 AM,01/03/22 09:23 AM,01/03/22 09:32 AM
+27,10028,01/03/22,7,Vascular,36901,AV fistula,75,01/03/22 09:30 AM,01/03/22 10:20 AM,01/03/22 10:48 AM,01/03/22 11:39 AM,01/03/22 11:47 AM
+28,10029,01/03/22,7,Vascular,36901,AV fistula,75,01/03/22 11:00 AM,01/03/22 12:36 PM,01/03/22 01:03 PM,01/03/22 01:54 PM,01/03/22 02:04 PM
+29,10030,01/03/22,7,Vascular,36901,AV fistula,75,01/03/22 12:30 PM,01/03/22 02:34 PM,01/03/22 03:04 PM,01/03/22 03:57 PM,01/03/22 04:06 PM
+30,10031,01/03/22,8,General,43775,Sleeve gastrectomy,120,01/03/22 07:00 AM,01/03/22 07:06 AM,01/03/22 07:38 AM,01/03/22 08:40 AM,01/03/22 08:52 AM
+31,10032,01/03/22,8,General,43775,Sleeve gastrectomy,120,01/03/22 09:15 AM,01/03/22 09:50 AM,01/03/22 10:21 AM,01/03/22 11:21 AM,01/03/22 11:33 AM
+32,10033,01/03/22,8,General,47562,Laparoscopic cholecystectomy,90,01/03/22 11:30 AM,01/03/22 12:30 PM,01/03/22 01:03 PM,01/03/22 01:48 PM,01/03/22 02:00 PM
+33,10034,01/04/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/04/22 07:00 AM,01/04/22 07:06 AM,01/04/22 07:31 AM,01/04/22 08:29 AM,01/04/22 08:41 AM
+34,10035,01/04/22,1,Podiatry,28289,Hallux rigidus correction with cheilectomy,60,01/04/22 09:15 AM,01/04/22 09:53 AM,01/04/22 10:19 AM,01/04/22 10:48 AM,01/04/22 10:59 AM
+35,10036,01/04/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/04/22 10:30 AM,01/04/22 11:43 AM,01/04/22 12:08 PM,01/04/22 01:05 PM,01/04/22 01:17 PM
+36,10037,01/04/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/04/22 07:00 AM,01/04/22 07:15 AM,01/04/22 07:43 AM,01/04/22 08:26 AM,01/04/22 08:35 AM
+37,10038,01/04/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/04/22 08:15 AM,01/04/22 08:59 AM,01/04/22 09:27 AM,01/04/22 10:12 AM,01/04/22 10:21 AM
+38,10039,01/04/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/04/22 09:30 AM,01/04/22 10:48 AM,01/04/22 11:15 AM,01/04/22 12:00 PM,01/04/22 12:09 PM
+39,10040,01/04/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/04/22 10:45 AM,01/04/22 12:41 PM,01/04/22 01:07 PM,01/04/22 01:52 PM,01/04/22 02:01 PM
+40,10041,01/04/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/04/22 11:00 AM,01/04/22 02:30 PM,01/04/22 02:59 PM,01/04/22 03:42 PM,01/04/22 03:52 PM
+41,10042,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 07:00 AM,01/04/22 07:03 AM,01/04/22 07:29 AM,01/04/22 07:42 AM,01/04/22 07:51 AM
+42,10043,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 08:00 AM,01/04/22 08:00 AM,01/04/22 08:26 AM,01/04/22 08:39 AM,01/04/22 08:49 AM
+43,10044,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 09:00 AM,01/04/22 09:04 AM,01/04/22 09:28 AM,01/04/22 09:41 AM,01/04/22 09:50 AM
+44,10045,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 10:00 AM,01/04/22 10:01 AM,01/04/22 10:23 AM,01/04/22 10:35 AM,01/04/22 10:44 AM
+45,10046,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 11:00 AM,01/04/22 10:56 AM,01/04/22 11:23 AM,01/04/22 11:36 AM,01/04/22 11:45 AM
+46,10047,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 12:00 PM,01/04/22 11:49 AM,01/04/22 12:15 PM,01/04/22 12:30 PM,01/04/22 12:38 PM
+47,10048,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 01:00 PM,01/04/22 12:55 PM,01/04/22 01:22 PM,01/04/22 01:35 PM,01/04/22 01:46 PM
+48,10049,01/04/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/04/22 02:00 PM,01/04/22 01:50 PM,01/04/22 02:16 PM,01/04/22 02:30 PM,01/04/22 02:39 PM
+49,10050,01/04/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/04/22 07:00 AM,01/04/22 07:03 AM,01/04/22 07:37 AM,01/04/22 08:35 AM,01/04/22 08:52 AM
+50,10051,01/04/22,4,OBGYN,57460,Cervical biopsy,75,01/04/22 09:15 AM,01/04/22 09:28 AM,01/04/22 09:59 AM,01/04/22 10:18 AM,01/04/22 10:27 AM
+51,10052,01/04/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/04/22 10:45 AM,01/04/22 11:18 AM,01/04/22 11:53 AM,01/04/22 12:35 PM,01/04/22 12:47 PM
+52,10053,01/04/22,4,OBGYN,57460,Cervical biopsy,75,01/04/22 01:00 PM,01/04/22 01:39 PM,01/04/22 02:08 PM,01/04/22 02:30 PM,01/04/22 02:39 PM
+53,10054,01/04/22,5,Urology,55250,Vasectomy,60,01/04/22 07:00 AM,01/04/22 07:08 AM,01/04/22 07:34 AM,01/04/22 07:53 AM,01/04/22 08:03 AM
+54,10055,01/04/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/04/22 08:15 AM,01/04/22 08:39 AM,01/04/22 09:05 AM,01/04/22 09:32 AM,01/04/22 09:41 AM
+55,10056,01/04/22,5,Urology,52353,Cystourethroscopy,60,01/04/22 10:00 AM,01/04/22 10:56 AM,01/04/22 11:22 AM,01/04/22 11:41 AM,01/04/22 11:51 AM
+56,10057,01/04/22,5,Urology,55250,Vasectomy,60,01/04/22 11:15 AM,01/04/22 12:45 PM,01/04/22 01:13 PM,01/04/22 01:34 PM,01/04/22 01:43 PM
+57,10058,01/04/22,6,Plastic,15773,Liposuction,180,01/04/22 07:00 AM,01/04/22 07:28 AM,01/04/22 08:04 AM,01/04/22 09:35 AM,01/04/22 09:49 AM
+58,10059,01/04/22,6,Plastic,15773,Liposuction,180,01/04/22 10:15 AM,01/04/22 10:22 AM,01/04/22 10:59 AM,01/04/22 12:28 PM,01/04/22 12:43 PM
+59,10060,01/04/22,6,Plastic,30400,Rhinoplasty,120,01/04/22 01:30 PM,01/04/22 01:44 PM,01/04/22 02:18 PM,01/04/22 03:22 PM,01/04/22 03:36 PM
+60,10061,01/04/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/04/22 07:00 AM,01/04/22 07:10 AM,01/04/22 07:37 AM,01/04/22 07:56 AM,01/04/22 08:05 AM
+61,10062,01/04/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/04/22 08:15 AM,01/04/22 08:38 AM,01/04/22 09:05 AM,01/04/22 09:23 AM,01/04/22 09:32 AM
+62,10063,01/04/22,7,Vascular,36901,AV fistula,75,01/04/22 09:30 AM,01/04/22 10:20 AM,01/04/22 10:48 AM,01/04/22 11:39 AM,01/04/22 11:47 AM
+63,10064,01/04/22,7,Vascular,36901,AV fistula,75,01/04/22 11:00 AM,01/04/22 12:36 PM,01/04/22 01:03 PM,01/04/22 01:54 PM,01/04/22 02:04 PM
+64,10065,01/04/22,7,Vascular,36901,AV fistula,75,01/04/22 12:30 PM,01/04/22 02:34 PM,01/04/22 03:04 PM,01/04/22 03:57 PM,01/04/22 04:06 PM
+65,10066,01/04/22,8,General,43775,Sleeve gastrectomy,120,01/04/22 07:00 AM,01/04/22 07:06 AM,01/04/22 07:38 AM,01/04/22 08:40 AM,01/04/22 08:52 AM
+66,10067,01/04/22,8,General,43775,Sleeve gastrectomy,120,01/04/22 09:15 AM,01/04/22 09:50 AM,01/04/22 10:21 AM,01/04/22 11:21 AM,01/04/22 11:33 AM
+67,10068,01/04/22,8,General,47562,Laparoscopic cholecystectomy,90,01/04/22 11:30 AM,01/04/22 12:30 PM,01/04/22 01:03 PM,01/04/22 01:48 PM,01/04/22 02:00 PM
+68,10069,01/05/22,1,Podiatry,28110,"Partial ostectomy, fifth metatarsal head",90,01/05/22 07:00 AM,01/05/22 07:05 AM,01/05/22 07:32 AM,01/05/22 09:05 AM,01/05/22 09:17 AM
+69,10070,01/05/22,1,Podiatry,28055,"Neurectomy, intrinsic musculature of foot",60,01/05/22 08:45 AM,01/05/22 09:48 AM,01/05/22 10:13 AM,01/05/22 11:01 AM,01/05/22 11:12 AM
+70,10071,01/05/22,1,Podiatry,28297,Lapidus bunionectomy,150,01/05/22 10:00 AM,01/05/22 11:50 AM,01/05/22 12:20 PM,01/05/22 12:42 PM,01/05/22 12:58 PM
+71,10072,01/05/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/05/22 12:45 PM,01/05/22 01:29 PM,01/05/22 01:53 PM,01/05/22 02:50 PM,01/05/22 03:02 PM
+72,10073,01/05/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/05/22 07:00 AM,01/05/22 07:15 AM,01/05/22 07:50 AM,01/05/22 09:38 AM,01/05/22 09:51 AM
+73,10074,01/05/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/05/22 09:15 AM,01/05/22 10:25 AM,01/05/22 10:55 AM,01/05/22 12:47 PM,01/05/22 01:03 PM
+74,10075,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 07:00 AM,01/05/22 07:03 AM,01/05/22 07:29 AM,01/05/22 07:42 AM,01/05/22 07:51 AM
+75,10076,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 08:00 AM,01/05/22 08:00 AM,01/05/22 08:26 AM,01/05/22 08:39 AM,01/05/22 08:49 AM
+76,10077,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 09:00 AM,01/05/22 09:04 AM,01/05/22 09:28 AM,01/05/22 09:41 AM,01/05/22 09:50 AM
+77,10078,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 10:00 AM,01/05/22 10:01 AM,01/05/22 10:23 AM,01/05/22 10:35 AM,01/05/22 10:44 AM
+78,10079,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 11:00 AM,01/05/22 10:56 AM,01/05/22 11:23 AM,01/05/22 11:36 AM,01/05/22 11:45 AM
+79,10080,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 12:00 PM,01/05/22 11:49 AM,01/05/22 12:15 PM,01/05/22 12:30 PM,01/05/22 12:38 PM
+80,10081,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 01:00 PM,01/05/22 12:55 PM,01/05/22 01:22 PM,01/05/22 01:35 PM,01/05/22 01:46 PM
+81,10082,01/05/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/05/22 02:00 PM,01/05/22 01:50 PM,01/05/22 02:16 PM,01/05/22 02:30 PM,01/05/22 02:39 PM
+82,10083,01/05/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/05/22 07:00 AM,01/05/22 07:03 AM,01/05/22 07:37 AM,01/05/22 08:35 AM,01/05/22 08:52 AM
+83,10084,01/05/22,4,OBGYN,57460,Cervical biopsy,75,01/05/22 09:15 AM,01/05/22 09:28 AM,01/05/22 09:59 AM,01/05/22 10:18 AM,01/05/22 10:27 AM
+84,10085,01/05/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/05/22 10:45 AM,01/05/22 11:18 AM,01/05/22 11:53 AM,01/05/22 12:35 PM,01/05/22 12:47 PM
+85,10086,01/05/22,4,OBGYN,57460,Cervical biopsy,75,01/05/22 01:00 PM,01/05/22 01:39 PM,01/05/22 02:08 PM,01/05/22 02:30 PM,01/05/22 02:39 PM
+86,10087,01/05/22,5,Urology,55250,Vasectomy,60,01/05/22 07:00 AM,01/05/22 07:08 AM,01/05/22 07:34 AM,01/05/22 07:53 AM,01/05/22 08:03 AM
+87,10088,01/05/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/05/22 08:15 AM,01/05/22 08:39 AM,01/05/22 09:05 AM,01/05/22 09:32 AM,01/05/22 09:41 AM
+88,10089,01/05/22,5,Urology,52353,Cystourethroscopy,60,01/05/22 10:00 AM,01/05/22 10:56 AM,01/05/22 11:22 AM,01/05/22 11:41 AM,01/05/22 11:51 AM
+89,10090,01/05/22,5,Urology,55250,Vasectomy,60,01/05/22 11:15 AM,01/05/22 12:45 PM,01/05/22 01:13 PM,01/05/22 01:34 PM,01/05/22 01:43 PM
+90,10091,01/05/22,6,Plastic,15773,Liposuction,180,01/05/22 07:00 AM,01/05/22 07:28 AM,01/05/22 08:04 AM,01/05/22 09:35 AM,01/05/22 09:49 AM
+91,10092,01/05/22,6,Plastic,15773,Liposuction,180,01/05/22 10:15 AM,01/05/22 10:22 AM,01/05/22 10:59 AM,01/05/22 12:28 PM,01/05/22 12:43 PM
+92,10093,01/05/22,6,Plastic,30400,Rhinoplasty,120,01/05/22 01:30 PM,01/05/22 01:44 PM,01/05/22 02:18 PM,01/05/22 03:22 PM,01/05/22 03:36 PM
+93,10094,01/05/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/05/22 07:00 AM,01/05/22 07:10 AM,01/05/22 07:37 AM,01/05/22 07:56 AM,01/05/22 08:05 AM
+94,10095,01/05/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/05/22 08:15 AM,01/05/22 08:38 AM,01/05/22 09:05 AM,01/05/22 09:23 AM,01/05/22 09:32 AM
+95,10096,01/05/22,7,Vascular,36901,AV fistula,75,01/05/22 09:30 AM,01/05/22 10:20 AM,01/05/22 10:48 AM,01/05/22 11:39 AM,01/05/22 11:47 AM
+96,10097,01/05/22,7,Vascular,36901,AV fistula,75,01/05/22 11:00 AM,01/05/22 12:36 PM,01/05/22 01:03 PM,01/05/22 01:54 PM,01/05/22 02:04 PM
+97,10098,01/05/22,7,Vascular,36901,AV fistula,75,01/05/22 12:30 PM,01/05/22 02:34 PM,01/05/22 03:04 PM,01/05/22 03:57 PM,01/05/22 04:06 PM
+98,10099,01/05/22,8,General,43775,Sleeve gastrectomy,120,01/05/22 07:00 AM,01/05/22 07:06 AM,01/05/22 07:38 AM,01/05/22 08:40 AM,01/05/22 08:52 AM
+99,10100,01/05/22,8,General,43775,Sleeve gastrectomy,120,01/05/22 09:15 AM,01/05/22 09:50 AM,01/05/22 10:21 AM,01/05/22 11:21 AM,01/05/22 11:33 AM
+100,10101,01/05/22,8,General,47562,Laparoscopic cholecystectomy,90,01/05/22 11:30 AM,01/05/22 12:30 PM,01/05/22 01:03 PM,01/05/22 01:48 PM,01/05/22 02:00 PM
+101,10102,01/06/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/06/22 07:00 AM,01/06/22 07:06 AM,01/06/22 07:31 AM,01/06/22 08:29 AM,01/06/22 08:41 AM
+102,10103,01/06/22,1,Podiatry,28289,Hallux rigidus correction with cheilectomy,60,01/06/22 09:15 AM,01/06/22 09:53 AM,01/06/22 10:19 AM,01/06/22 10:48 AM,01/06/22 10:59 AM
+103,10104,01/06/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/06/22 10:30 AM,01/06/22 11:43 AM,01/06/22 12:08 PM,01/06/22 01:05 PM,01/06/22 01:17 PM
+104,10105,01/06/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/06/22 07:00 AM,01/06/22 07:15 AM,01/06/22 07:43 AM,01/06/22 08:26 AM,01/06/22 08:35 AM
+105,10106,01/06/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/06/22 08:15 AM,01/06/22 08:59 AM,01/06/22 09:27 AM,01/06/22 10:12 AM,01/06/22 10:21 AM
+106,10107,01/06/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/06/22 09:30 AM,01/06/22 10:48 AM,01/06/22 11:15 AM,01/06/22 12:00 PM,01/06/22 12:09 PM
+107,10108,01/06/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/06/22 10:45 AM,01/06/22 12:41 PM,01/06/22 01:07 PM,01/06/22 01:52 PM,01/06/22 02:01 PM
+108,10109,01/06/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/06/22 11:00 AM,01/06/22 02:30 PM,01/06/22 02:59 PM,01/06/22 03:42 PM,01/06/22 03:52 PM
+109,10110,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 07:00 AM,01/06/22 07:03 AM,01/06/22 07:29 AM,01/06/22 07:42 AM,01/06/22 07:51 AM
+110,10111,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 08:00 AM,01/06/22 08:00 AM,01/06/22 08:26 AM,01/06/22 08:39 AM,01/06/22 08:49 AM
+111,10112,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 09:00 AM,01/06/22 09:04 AM,01/06/22 09:28 AM,01/06/22 09:41 AM,01/06/22 09:50 AM
+112,10113,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 10:00 AM,01/06/22 10:01 AM,01/06/22 10:23 AM,01/06/22 10:35 AM,01/06/22 10:44 AM
+113,10114,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 11:00 AM,01/06/22 10:56 AM,01/06/22 11:23 AM,01/06/22 11:36 AM,01/06/22 11:45 AM
+114,10115,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 12:00 PM,01/06/22 11:49 AM,01/06/22 12:15 PM,01/06/22 12:30 PM,01/06/22 12:38 PM
+115,10116,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 01:00 PM,01/06/22 12:55 PM,01/06/22 01:22 PM,01/06/22 01:35 PM,01/06/22 01:46 PM
+116,10117,01/06/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/06/22 02:00 PM,01/06/22 01:50 PM,01/06/22 02:16 PM,01/06/22 02:30 PM,01/06/22 02:39 PM
+117,10118,01/06/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/06/22 07:00 AM,01/06/22 07:03 AM,01/06/22 07:37 AM,01/06/22 08:35 AM,01/06/22 08:52 AM
+118,10119,01/06/22,4,OBGYN,57460,Cervical biopsy,75,01/06/22 09:15 AM,01/06/22 09:28 AM,01/06/22 09:59 AM,01/06/22 10:18 AM,01/06/22 10:27 AM
+119,10120,01/06/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/06/22 10:45 AM,01/06/22 11:18 AM,01/06/22 11:53 AM,01/06/22 12:35 PM,01/06/22 12:47 PM
+120,10121,01/06/22,4,OBGYN,57460,Cervical biopsy,75,01/06/22 01:00 PM,01/06/22 01:39 PM,01/06/22 02:08 PM,01/06/22 02:30 PM,01/06/22 02:39 PM
+121,10122,01/06/22,5,Urology,55250,Vasectomy,60,01/06/22 07:00 AM,01/06/22 07:08 AM,01/06/22 07:34 AM,01/06/22 07:53 AM,01/06/22 08:03 AM
+122,10123,01/06/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/06/22 08:15 AM,01/06/22 08:39 AM,01/06/22 09:05 AM,01/06/22 09:32 AM,01/06/22 09:41 AM
+123,10124,01/06/22,5,Urology,52353,Cystourethroscopy,60,01/06/22 10:00 AM,01/06/22 10:56 AM,01/06/22 11:22 AM,01/06/22 11:41 AM,01/06/22 11:51 AM
+124,10125,01/06/22,5,Urology,55250,Vasectomy,60,01/06/22 11:15 AM,01/06/22 12:45 PM,01/06/22 01:13 PM,01/06/22 01:34 PM,01/06/22 01:43 PM
+125,10126,01/06/22,6,Plastic,15773,Liposuction,180,01/06/22 07:00 AM,01/06/22 07:28 AM,01/06/22 08:04 AM,01/06/22 09:35 AM,01/06/22 09:49 AM
+126,10127,01/06/22,6,Plastic,15773,Liposuction,180,01/06/22 10:15 AM,01/06/22 10:22 AM,01/06/22 10:59 AM,01/06/22 12:28 PM,01/06/22 12:43 PM
+127,10128,01/06/22,6,Plastic,30400,Rhinoplasty,120,01/06/22 01:30 PM,01/06/22 01:44 PM,01/06/22 02:18 PM,01/06/22 03:22 PM,01/06/22 03:36 PM
+128,10129,01/06/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/06/22 07:00 AM,01/06/22 07:10 AM,01/06/22 07:37 AM,01/06/22 07:56 AM,01/06/22 08:05 AM
+129,10130,01/06/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/06/22 08:15 AM,01/06/22 08:38 AM,01/06/22 09:05 AM,01/06/22 09:23 AM,01/06/22 09:32 AM
+130,10131,01/06/22,7,Vascular,36901,AV fistula,75,01/06/22 09:30 AM,01/06/22 10:20 AM,01/06/22 10:48 AM,01/06/22 11:39 AM,01/06/22 11:47 AM
+131,10132,01/06/22,7,Vascular,36901,AV fistula,75,01/06/22 11:00 AM,01/06/22 12:36 PM,01/06/22 01:03 PM,01/06/22 01:54 PM,01/06/22 02:04 PM
+132,10133,01/06/22,7,Vascular,36901,AV fistula,75,01/06/22 12:30 PM,01/06/22 02:34 PM,01/06/22 03:04 PM,01/06/22 03:57 PM,01/06/22 04:06 PM
+133,10134,01/06/22,8,General,43775,Sleeve gastrectomy,120,01/06/22 07:00 AM,01/06/22 07:06 AM,01/06/22 07:38 AM,01/06/22 08:40 AM,01/06/22 08:52 AM
+134,10135,01/06/22,8,General,43775,Sleeve gastrectomy,120,01/06/22 09:15 AM,01/06/22 09:50 AM,01/06/22 10:21 AM,01/06/22 11:21 AM,01/06/22 11:33 AM
+135,10136,01/06/22,8,General,47562,Laparoscopic cholecystectomy,90,01/06/22 11:30 AM,01/06/22 12:30 PM,01/06/22 01:03 PM,01/06/22 01:48 PM,01/06/22 02:00 PM
+136,10137,01/07/22,1,Podiatry,28110,"Partial ostectomy, fifth metatarsal head",90,01/07/22 07:00 AM,01/07/22 07:05 AM,01/07/22 07:32 AM,01/07/22 09:05 AM,01/07/22 09:17 AM
+137,10138,01/07/22,1,Podiatry,28055,"Neurectomy, intrinsic musculature of foot",60,01/07/22 08:45 AM,01/07/22 09:48 AM,01/07/22 10:13 AM,01/07/22 11:01 AM,01/07/22 11:12 AM
+138,10139,01/07/22,1,Podiatry,28297,Lapidus bunionectomy,150,01/07/22 10:00 AM,01/07/22 11:50 AM,01/07/22 12:20 PM,01/07/22 12:42 PM,01/07/22 12:58 PM
+139,10140,01/07/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/07/22 12:45 PM,01/07/22 01:29 PM,01/07/22 01:53 PM,01/07/22 02:50 PM,01/07/22 03:02 PM
+140,10141,01/07/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/07/22 07:00 AM,01/07/22 07:15 AM,01/07/22 07:50 AM,01/07/22 09:38 AM,01/07/22 09:51 AM
+141,10142,01/07/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/07/22 09:15 AM,01/07/22 10:25 AM,01/07/22 10:55 AM,01/07/22 12:47 PM,01/07/22 01:03 PM
+142,10143,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 07:00 AM,01/07/22 07:03 AM,01/07/22 07:29 AM,01/07/22 07:42 AM,01/07/22 07:51 AM
+143,10144,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 08:00 AM,01/07/22 08:00 AM,01/07/22 08:26 AM,01/07/22 08:39 AM,01/07/22 08:49 AM
+144,10145,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 09:00 AM,01/07/22 09:04 AM,01/07/22 09:28 AM,01/07/22 09:41 AM,01/07/22 09:50 AM
+145,10146,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 10:00 AM,01/07/22 10:01 AM,01/07/22 10:23 AM,01/07/22 10:35 AM,01/07/22 10:44 AM
+146,10147,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 11:00 AM,01/07/22 10:56 AM,01/07/22 11:23 AM,01/07/22 11:36 AM,01/07/22 11:45 AM
+147,10148,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 12:00 PM,01/07/22 11:49 AM,01/07/22 12:15 PM,01/07/22 12:30 PM,01/07/22 12:38 PM
+148,10149,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 01:00 PM,01/07/22 12:55 PM,01/07/22 01:22 PM,01/07/22 01:35 PM,01/07/22 01:46 PM
+149,10150,01/07/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/07/22 02:00 PM,01/07/22 01:50 PM,01/07/22 02:16 PM,01/07/22 02:30 PM,01/07/22 02:39 PM
+150,10151,01/07/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/07/22 07:00 AM,01/07/22 07:03 AM,01/07/22 07:37 AM,01/07/22 08:35 AM,01/07/22 08:52 AM
+151,10152,01/07/22,4,OBGYN,57460,Cervical biopsy,75,01/07/22 09:15 AM,01/07/22 09:28 AM,01/07/22 09:59 AM,01/07/22 10:18 AM,01/07/22 10:27 AM
+152,10153,01/07/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/07/22 10:45 AM,01/07/22 11:18 AM,01/07/22 11:53 AM,01/07/22 12:35 PM,01/07/22 12:47 PM
+153,10154,01/07/22,4,OBGYN,57460,Cervical biopsy,75,01/07/22 01:00 PM,01/07/22 01:39 PM,01/07/22 02:08 PM,01/07/22 02:30 PM,01/07/22 02:39 PM
+154,10155,01/07/22,5,Urology,55250,Vasectomy,60,01/07/22 07:00 AM,01/07/22 07:08 AM,01/07/22 07:34 AM,01/07/22 07:53 AM,01/07/22 08:03 AM
+155,10156,01/07/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/07/22 08:15 AM,01/07/22 08:39 AM,01/07/22 09:05 AM,01/07/22 09:32 AM,01/07/22 09:41 AM
+156,10157,01/07/22,5,Urology,52353,Cystourethroscopy,60,01/07/22 10:00 AM,01/07/22 10:56 AM,01/07/22 11:22 AM,01/07/22 11:41 AM,01/07/22 11:51 AM
+157,10158,01/07/22,5,Urology,55250,Vasectomy,60,01/07/22 11:15 AM,01/07/22 12:45 PM,01/07/22 01:13 PM,01/07/22 01:34 PM,01/07/22 01:43 PM
+158,10159,01/07/22,6,Plastic,15773,Liposuction,180,01/07/22 07:00 AM,01/07/22 07:28 AM,01/07/22 08:04 AM,01/07/22 09:35 AM,01/07/22 09:49 AM
+159,10160,01/07/22,6,Plastic,15773,Liposuction,180,01/07/22 10:15 AM,01/07/22 10:22 AM,01/07/22 10:59 AM,01/07/22 12:28 PM,01/07/22 12:43 PM
+160,10161,01/07/22,6,Plastic,30400,Rhinoplasty,120,01/07/22 01:30 PM,01/07/22 01:44 PM,01/07/22 02:18 PM,01/07/22 03:22 PM,01/07/22 03:36 PM
+161,10162,01/07/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/07/22 07:00 AM,01/07/22 07:10 AM,01/07/22 07:37 AM,01/07/22 07:56 AM,01/07/22 08:05 AM
+162,10163,01/07/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/07/22 08:15 AM,01/07/22 08:38 AM,01/07/22 09:05 AM,01/07/22 09:23 AM,01/07/22 09:32 AM
+163,10164,01/07/22,7,Vascular,36901,AV fistula,75,01/07/22 09:30 AM,01/07/22 10:20 AM,01/07/22 10:48 AM,01/07/22 11:39 AM,01/07/22 11:47 AM
+164,10165,01/07/22,7,Vascular,36901,AV fistula,75,01/07/22 11:00 AM,01/07/22 12:36 PM,01/07/22 01:03 PM,01/07/22 01:54 PM,01/07/22 02:04 PM
+165,10166,01/07/22,7,Vascular,36901,AV fistula,75,01/07/22 12:30 PM,01/07/22 02:34 PM,01/07/22 03:04 PM,01/07/22 03:57 PM,01/07/22 04:06 PM
+166,10167,01/07/22,8,General,43775,Sleeve gastrectomy,120,01/07/22 07:00 AM,01/07/22 07:06 AM,01/07/22 07:38 AM,01/07/22 08:40 AM,01/07/22 08:52 AM
+167,10168,01/07/22,8,General,43775,Sleeve gastrectomy,120,01/07/22 09:15 AM,01/07/22 09:50 AM,01/07/22 10:21 AM,01/07/22 11:21 AM,01/07/22 11:33 AM
+168,10169,01/07/22,8,General,47562,Laparoscopic cholecystectomy,90,01/07/22 11:30 AM,01/07/22 12:30 PM,01/07/22 01:03 PM,01/07/22 01:48 PM,01/07/22 02:00 PM
+169,10170,01/10/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/10/22 07:00 AM,01/10/22 07:06 AM,01/10/22 07:31 AM,01/10/22 08:29 AM,01/10/22 08:41 AM
+170,10171,01/10/22,1,Podiatry,28289,Hallux rigidus correction with cheilectomy,60,01/10/22 09:15 AM,01/10/22 09:53 AM,01/10/22 10:19 AM,01/10/22 10:48 AM,01/10/22 10:59 AM
+171,10172,01/10/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/10/22 10:30 AM,01/10/22 11:43 AM,01/10/22 12:08 PM,01/10/22 01:05 PM,01/10/22 01:17 PM
+172,10173,01/10/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/10/22 07:00 AM,01/10/22 07:15 AM,01/10/22 07:43 AM,01/10/22 08:26 AM,01/10/22 08:35 AM
+173,10174,01/10/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/10/22 08:15 AM,01/10/22 08:59 AM,01/10/22 09:27 AM,01/10/22 10:12 AM,01/10/22 10:21 AM
+174,10175,01/10/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/10/22 09:30 AM,01/10/22 10:48 AM,01/10/22 11:15 AM,01/10/22 12:00 PM,01/10/22 12:09 PM
+175,10176,01/10/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/10/22 10:45 AM,01/10/22 12:41 PM,01/10/22 01:07 PM,01/10/22 01:52 PM,01/10/22 02:01 PM
+176,10177,01/10/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/10/22 11:00 AM,01/10/22 02:30 PM,01/10/22 02:59 PM,01/10/22 03:42 PM,01/10/22 03:52 PM
+177,10178,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 07:00 AM,01/10/22 07:03 AM,01/10/22 07:29 AM,01/10/22 07:42 AM,01/10/22 07:51 AM
+178,10179,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 08:00 AM,01/10/22 08:00 AM,01/10/22 08:26 AM,01/10/22 08:39 AM,01/10/22 08:49 AM
+179,10180,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 09:00 AM,01/10/22 09:04 AM,01/10/22 09:28 AM,01/10/22 09:41 AM,01/10/22 09:50 AM
+180,10181,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 10:00 AM,01/10/22 10:01 AM,01/10/22 10:23 AM,01/10/22 10:35 AM,01/10/22 10:44 AM
+181,10182,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 11:00 AM,01/10/22 10:56 AM,01/10/22 11:23 AM,01/10/22 11:36 AM,01/10/22 11:45 AM
+182,10183,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 12:00 PM,01/10/22 11:49 AM,01/10/22 12:15 PM,01/10/22 12:30 PM,01/10/22 12:38 PM
+183,10184,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 01:00 PM,01/10/22 12:55 PM,01/10/22 01:22 PM,01/10/22 01:35 PM,01/10/22 01:46 PM
+184,10185,01/10/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/10/22 02:00 PM,01/10/22 01:50 PM,01/10/22 02:16 PM,01/10/22 02:30 PM,01/10/22 02:39 PM
+185,10186,01/10/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/10/22 07:00 AM,01/10/22 07:03 AM,01/10/22 07:37 AM,01/10/22 08:35 AM,01/10/22 08:52 AM
+186,10187,01/10/22,4,OBGYN,57460,Cervical biopsy,75,01/10/22 09:15 AM,01/10/22 09:28 AM,01/10/22 09:59 AM,01/10/22 10:18 AM,01/10/22 10:27 AM
+187,10188,01/10/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/10/22 10:45 AM,01/10/22 11:18 AM,01/10/22 11:53 AM,01/10/22 12:35 PM,01/10/22 12:47 PM
+188,10189,01/10/22,4,OBGYN,57460,Cervical biopsy,75,01/10/22 01:00 PM,01/10/22 01:39 PM,01/10/22 02:08 PM,01/10/22 02:30 PM,01/10/22 02:39 PM
+189,10190,01/10/22,5,Urology,55250,Vasectomy,60,01/10/22 07:00 AM,01/10/22 07:08 AM,01/10/22 07:34 AM,01/10/22 07:53 AM,01/10/22 08:03 AM
+190,10191,01/10/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/10/22 08:15 AM,01/10/22 08:39 AM,01/10/22 09:05 AM,01/10/22 09:32 AM,01/10/22 09:41 AM
+191,10192,01/10/22,5,Urology,52353,Cystourethroscopy,60,01/10/22 10:00 AM,01/10/22 10:56 AM,01/10/22 11:22 AM,01/10/22 11:41 AM,01/10/22 11:51 AM
+192,10193,01/10/22,5,Urology,55250,Vasectomy,60,01/10/22 11:15 AM,01/10/22 12:45 PM,01/10/22 01:13 PM,01/10/22 01:34 PM,01/10/22 01:43 PM
+193,10194,01/10/22,6,Plastic,15773,Liposuction,180,01/10/22 07:00 AM,01/10/22 07:28 AM,01/10/22 08:04 AM,01/10/22 09:35 AM,01/10/22 09:49 AM
+194,10195,01/10/22,6,Plastic,15773,Liposuction,180,01/10/22 10:15 AM,01/10/22 10:22 AM,01/10/22 10:59 AM,01/10/22 12:28 PM,01/10/22 12:43 PM
+195,10196,01/10/22,6,Plastic,30400,Rhinoplasty,120,01/10/22 01:30 PM,01/10/22 01:44 PM,01/10/22 02:18 PM,01/10/22 03:22 PM,01/10/22 03:36 PM
+196,10197,01/10/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/10/22 07:00 AM,01/10/22 07:10 AM,01/10/22 07:37 AM,01/10/22 07:56 AM,01/10/22 08:05 AM
+197,10198,01/10/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/10/22 08:15 AM,01/10/22 08:38 AM,01/10/22 09:05 AM,01/10/22 09:23 AM,01/10/22 09:32 AM
+198,10199,01/10/22,7,Vascular,36901,AV fistula,75,01/10/22 09:30 AM,01/10/22 10:20 AM,01/10/22 10:48 AM,01/10/22 11:39 AM,01/10/22 11:47 AM
+199,10200,01/10/22,7,Vascular,36901,AV fistula,75,01/10/22 11:00 AM,01/10/22 12:36 PM,01/10/22 01:03 PM,01/10/22 01:54 PM,01/10/22 02:04 PM
+200,10201,01/10/22,7,Vascular,36901,AV fistula,75,01/10/22 12:30 PM,01/10/22 02:34 PM,01/10/22 03:04 PM,01/10/22 03:57 PM,01/10/22 04:06 PM
+201,10202,01/10/22,8,General,43775,Sleeve gastrectomy,120,01/10/22 07:00 AM,01/10/22 07:06 AM,01/10/22 07:38 AM,01/10/22 08:40 AM,01/10/22 08:52 AM
+202,10203,01/10/22,8,General,43775,Sleeve gastrectomy,120,01/10/22 09:15 AM,01/10/22 09:50 AM,01/10/22 10:21 AM,01/10/22 11:21 AM,01/10/22 11:33 AM
+203,10204,01/10/22,8,General,47562,Laparoscopic cholecystectomy,90,01/10/22 11:30 AM,01/10/22 12:30 PM,01/10/22 01:03 PM,01/10/22 01:48 PM,01/10/22 02:00 PM
+204,10205,01/11/22,1,Podiatry,28110,"Partial ostectomy, fifth metatarsal head",90,01/11/22 07:00 AM,01/11/22 07:05 AM,01/11/22 07:32 AM,01/11/22 09:05 AM,01/11/22 09:17 AM
+205,10206,01/11/22,1,Podiatry,28055,"Neurectomy, intrinsic musculature of foot",60,01/11/22 08:45 AM,01/11/22 09:48 AM,01/11/22 10:13 AM,01/11/22 11:01 AM,01/11/22 11:12 AM
+206,10207,01/11/22,1,Podiatry,28297,Lapidus bunionectomy,150,01/11/22 10:00 AM,01/11/22 11:50 AM,01/11/22 12:20 PM,01/11/22 12:42 PM,01/11/22 12:58 PM
+207,10208,01/11/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/11/22 12:45 PM,01/11/22 01:29 PM,01/11/22 01:53 PM,01/11/22 02:50 PM,01/11/22 03:02 PM
+208,10209,01/11/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/11/22 07:00 AM,01/11/22 07:15 AM,01/11/22 07:50 AM,01/11/22 09:38 AM,01/11/22 09:51 AM
+209,10210,01/11/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/11/22 09:15 AM,01/11/22 10:25 AM,01/11/22 10:55 AM,01/11/22 12:47 PM,01/11/22 01:03 PM
+210,10211,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 07:00 AM,01/11/22 07:03 AM,01/11/22 07:29 AM,01/11/22 07:42 AM,01/11/22 07:51 AM
+211,10212,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 08:00 AM,01/11/22 08:00 AM,01/11/22 08:26 AM,01/11/22 08:39 AM,01/11/22 08:49 AM
+212,10213,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 09:00 AM,01/11/22 09:04 AM,01/11/22 09:28 AM,01/11/22 09:41 AM,01/11/22 09:50 AM
+213,10214,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 10:00 AM,01/11/22 10:01 AM,01/11/22 10:23 AM,01/11/22 10:35 AM,01/11/22 10:44 AM
+214,10215,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 11:00 AM,01/11/22 10:56 AM,01/11/22 11:23 AM,01/11/22 11:36 AM,01/11/22 11:45 AM
+215,10216,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 12:00 PM,01/11/22 11:49 AM,01/11/22 12:15 PM,01/11/22 12:30 PM,01/11/22 12:38 PM
+216,10217,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 01:00 PM,01/11/22 12:55 PM,01/11/22 01:22 PM,01/11/22 01:35 PM,01/11/22 01:46 PM
+217,10218,01/11/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/11/22 02:00 PM,01/11/22 01:50 PM,01/11/22 02:16 PM,01/11/22 02:30 PM,01/11/22 02:39 PM
+218,10219,01/11/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/11/22 07:00 AM,01/11/22 07:03 AM,01/11/22 07:37 AM,01/11/22 08:35 AM,01/11/22 08:52 AM
+219,10220,01/11/22,4,OBGYN,57460,Cervical biopsy,75,01/11/22 09:15 AM,01/11/22 09:28 AM,01/11/22 09:59 AM,01/11/22 10:18 AM,01/11/22 10:27 AM
+220,10221,01/11/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/11/22 10:45 AM,01/11/22 11:18 AM,01/11/22 11:53 AM,01/11/22 12:35 PM,01/11/22 12:47 PM
+221,10222,01/11/22,4,OBGYN,57460,Cervical biopsy,75,01/11/22 01:00 PM,01/11/22 01:39 PM,01/11/22 02:08 PM,01/11/22 02:30 PM,01/11/22 02:39 PM
+222,10223,01/11/22,5,Urology,55250,Vasectomy,60,01/11/22 07:00 AM,01/11/22 07:08 AM,01/11/22 07:34 AM,01/11/22 07:53 AM,01/11/22 08:03 AM
+223,10224,01/11/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/11/22 08:15 AM,01/11/22 08:39 AM,01/11/22 09:05 AM,01/11/22 09:32 AM,01/11/22 09:41 AM
+224,10225,01/11/22,5,Urology,52353,Cystourethroscopy,60,01/11/22 10:00 AM,01/11/22 10:56 AM,01/11/22 11:22 AM,01/11/22 11:41 AM,01/11/22 11:51 AM
+225,10226,01/11/22,5,Urology,55250,Vasectomy,60,01/11/22 11:15 AM,01/11/22 12:45 PM,01/11/22 01:13 PM,01/11/22 01:34 PM,01/11/22 01:43 PM
+226,10227,01/11/22,6,Plastic,15773,Liposuction,180,01/11/22 07:00 AM,01/11/22 07:28 AM,01/11/22 08:04 AM,01/11/22 09:35 AM,01/11/22 09:49 AM
+227,10228,01/11/22,6,Plastic,15773,Liposuction,180,01/11/22 10:15 AM,01/11/22 10:22 AM,01/11/22 10:59 AM,01/11/22 12:28 PM,01/11/22 12:43 PM
+228,10229,01/11/22,6,Plastic,30400,Rhinoplasty,120,01/11/22 01:30 PM,01/11/22 01:44 PM,01/11/22 02:18 PM,01/11/22 03:22 PM,01/11/22 03:36 PM
+229,10230,01/11/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/11/22 07:00 AM,01/11/22 07:10 AM,01/11/22 07:37 AM,01/11/22 07:56 AM,01/11/22 08:05 AM
+230,10231,01/11/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/11/22 08:15 AM,01/11/22 08:38 AM,01/11/22 09:05 AM,01/11/22 09:23 AM,01/11/22 09:32 AM
+231,10232,01/11/22,7,Vascular,36901,AV fistula,75,01/11/22 09:30 AM,01/11/22 10:20 AM,01/11/22 10:48 AM,01/11/22 11:39 AM,01/11/22 11:47 AM
+232,10233,01/11/22,7,Vascular,36901,AV fistula,75,01/11/22 11:00 AM,01/11/22 12:36 PM,01/11/22 01:03 PM,01/11/22 01:54 PM,01/11/22 02:04 PM
+233,10234,01/11/22,7,Vascular,36901,AV fistula,75,01/11/22 12:30 PM,01/11/22 02:34 PM,01/11/22 03:04 PM,01/11/22 03:57 PM,01/11/22 04:06 PM
+234,10235,01/11/22,8,General,43775,Sleeve gastrectomy,120,01/11/22 07:00 AM,01/11/22 07:06 AM,01/11/22 07:38 AM,01/11/22 08:40 AM,01/11/22 08:52 AM
+235,10236,01/11/22,8,General,43775,Sleeve gastrectomy,120,01/11/22 09:15 AM,01/11/22 09:50 AM,01/11/22 10:21 AM,01/11/22 11:21 AM,01/11/22 11:33 AM
+236,10237,01/11/22,8,General,47562,Laparoscopic cholecystectomy,90,01/11/22 11:30 AM,01/11/22 12:30 PM,01/11/22 01:03 PM,01/11/22 01:48 PM,01/11/22 02:00 PM
+237,10238,01/12/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/12/22 07:00 AM,01/12/22 07:06 AM,01/12/22 07:31 AM,01/12/22 08:29 AM,01/12/22 08:41 AM
+238,10239,01/12/22,1,Podiatry,28289,Hallux rigidus correction with cheilectomy,60,01/12/22 09:15 AM,01/12/22 09:53 AM,01/12/22 10:19 AM,01/12/22 10:48 AM,01/12/22 10:59 AM
+239,10240,01/12/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/12/22 10:30 AM,01/12/22 11:43 AM,01/12/22 12:08 PM,01/12/22 01:05 PM,01/12/22 01:17 PM
+240,10241,01/12/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/12/22 07:00 AM,01/12/22 07:15 AM,01/12/22 07:43 AM,01/12/22 08:26 AM,01/12/22 08:35 AM
+241,10242,01/12/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/12/22 08:15 AM,01/12/22 08:59 AM,01/12/22 09:27 AM,01/12/22 10:12 AM,01/12/22 10:21 AM
+242,10243,01/12/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/12/22 09:30 AM,01/12/22 10:48 AM,01/12/22 11:15 AM,01/12/22 12:00 PM,01/12/22 12:09 PM
+243,10244,01/12/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/12/22 10:45 AM,01/12/22 12:41 PM,01/12/22 01:07 PM,01/12/22 01:52 PM,01/12/22 02:01 PM
+244,10245,01/12/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/12/22 11:00 AM,01/12/22 02:30 PM,01/12/22 02:59 PM,01/12/22 03:42 PM,01/12/22 03:52 PM
+245,10246,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 07:00 AM,01/12/22 07:03 AM,01/12/22 07:29 AM,01/12/22 07:42 AM,01/12/22 07:51 AM
+246,10247,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 08:00 AM,01/12/22 08:00 AM,01/12/22 08:26 AM,01/12/22 08:39 AM,01/12/22 08:49 AM
+247,10248,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 09:00 AM,01/12/22 09:04 AM,01/12/22 09:28 AM,01/12/22 09:41 AM,01/12/22 09:50 AM
+248,10249,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 10:00 AM,01/12/22 10:01 AM,01/12/22 10:23 AM,01/12/22 10:35 AM,01/12/22 10:44 AM
+249,10250,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 11:00 AM,01/12/22 10:56 AM,01/12/22 11:23 AM,01/12/22 11:36 AM,01/12/22 11:45 AM
+250,10251,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 12:00 PM,01/12/22 11:49 AM,01/12/22 12:15 PM,01/12/22 12:30 PM,01/12/22 12:38 PM
+251,10252,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 01:00 PM,01/12/22 12:55 PM,01/12/22 01:22 PM,01/12/22 01:35 PM,01/12/22 01:46 PM
+252,10253,01/12/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/12/22 02:00 PM,01/12/22 01:50 PM,01/12/22 02:16 PM,01/12/22 02:30 PM,01/12/22 02:39 PM
+253,10254,01/12/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/12/22 07:00 AM,01/12/22 07:03 AM,01/12/22 07:37 AM,01/12/22 08:35 AM,01/12/22 08:52 AM
+254,10255,01/12/22,4,OBGYN,57460,Cervical biopsy,75,01/12/22 09:15 AM,01/12/22 09:28 AM,01/12/22 09:59 AM,01/12/22 10:18 AM,01/12/22 10:27 AM
+255,10256,01/12/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/12/22 10:45 AM,01/12/22 11:18 AM,01/12/22 11:53 AM,01/12/22 12:35 PM,01/12/22 12:47 PM
+256,10257,01/12/22,4,OBGYN,57460,Cervical biopsy,75,01/12/22 01:00 PM,01/12/22 01:39 PM,01/12/22 02:08 PM,01/12/22 02:30 PM,01/12/22 02:39 PM
+257,10258,01/12/22,5,Urology,55250,Vasectomy,60,01/12/22 07:00 AM,01/12/22 07:08 AM,01/12/22 07:34 AM,01/12/22 07:53 AM,01/12/22 08:03 AM
+258,10259,01/12/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/12/22 08:15 AM,01/12/22 08:39 AM,01/12/22 09:05 AM,01/12/22 09:32 AM,01/12/22 09:41 AM
+259,10260,01/12/22,5,Urology,52353,Cystourethroscopy,60,01/12/22 10:00 AM,01/12/22 10:56 AM,01/12/22 11:22 AM,01/12/22 11:41 AM,01/12/22 11:51 AM
+260,10261,01/12/22,5,Urology,55250,Vasectomy,60,01/12/22 11:15 AM,01/12/22 12:45 PM,01/12/22 01:13 PM,01/12/22 01:34 PM,01/12/22 01:43 PM
+261,10262,01/12/22,6,Plastic,15773,Liposuction,180,01/12/22 07:00 AM,01/12/22 07:28 AM,01/12/22 08:04 AM,01/12/22 09:35 AM,01/12/22 09:49 AM
+262,10263,01/12/22,6,Plastic,15773,Liposuction,180,01/12/22 10:15 AM,01/12/22 10:22 AM,01/12/22 10:59 AM,01/12/22 12:28 PM,01/12/22 12:43 PM
+263,10264,01/12/22,6,Plastic,30400,Rhinoplasty,120,01/12/22 01:30 PM,01/12/22 01:44 PM,01/12/22 02:18 PM,01/12/22 03:22 PM,01/12/22 03:36 PM
+264,10265,01/12/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/12/22 07:00 AM,01/12/22 07:10 AM,01/12/22 07:37 AM,01/12/22 07:56 AM,01/12/22 08:05 AM
+265,10266,01/12/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/12/22 08:15 AM,01/12/22 08:38 AM,01/12/22 09:05 AM,01/12/22 09:23 AM,01/12/22 09:32 AM
+266,10267,01/12/22,7,Vascular,36901,AV fistula,75,01/12/22 09:30 AM,01/12/22 10:20 AM,01/12/22 10:48 AM,01/12/22 11:39 AM,01/12/22 11:47 AM
+267,10268,01/12/22,7,Vascular,36901,AV fistula,75,01/12/22 11:00 AM,01/12/22 12:36 PM,01/12/22 01:03 PM,01/12/22 01:54 PM,01/12/22 02:04 PM
+268,10269,01/12/22,7,Vascular,36901,AV fistula,75,01/12/22 12:30 PM,01/12/22 02:34 PM,01/12/22 03:04 PM,01/12/22 03:57 PM,01/12/22 04:06 PM
+269,10270,01/12/22,8,General,43775,Sleeve gastrectomy,120,01/12/22 07:00 AM,01/12/22 07:06 AM,01/12/22 07:38 AM,01/12/22 08:40 AM,01/12/22 08:52 AM
+270,10271,01/12/22,8,General,43775,Sleeve gastrectomy,120,01/12/22 09:15 AM,01/12/22 09:50 AM,01/12/22 10:21 AM,01/12/22 11:21 AM,01/12/22 11:33 AM
+271,10272,01/12/22,8,General,47562,Laparoscopic cholecystectomy,90,01/12/22 11:30 AM,01/12/22 12:30 PM,01/12/22 01:03 PM,01/12/22 01:48 PM,01/12/22 02:00 PM
+272,10273,01/13/22,1,Podiatry,28110,"Partial ostectomy, fifth metatarsal head",90,01/13/22 07:00 AM,01/13/22 07:05 AM,01/13/22 07:32 AM,01/13/22 09:05 AM,01/13/22 09:17 AM
+273,10274,01/13/22,1,Podiatry,28055,"Neurectomy, intrinsic musculature of foot",60,01/13/22 08:45 AM,01/13/22 09:48 AM,01/13/22 10:13 AM,01/13/22 11:01 AM,01/13/22 11:12 AM
+274,10275,01/13/22,1,Podiatry,28297,Lapidus bunionectomy,150,01/13/22 10:00 AM,01/13/22 11:50 AM,01/13/22 12:20 PM,01/13/22 12:42 PM,01/13/22 12:58 PM
+275,10276,01/13/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/13/22 12:45 PM,01/13/22 01:29 PM,01/13/22 01:53 PM,01/13/22 02:50 PM,01/13/22 03:02 PM
+276,10277,01/13/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/13/22 07:00 AM,01/13/22 07:15 AM,01/13/22 07:50 AM,01/13/22 09:38 AM,01/13/22 09:51 AM
+277,10278,01/13/22,2,Orthopedics,27445,"Arthroplasty, knee, hinge prothesis",120,01/13/22 09:15 AM,01/13/22 10:25 AM,01/13/22 10:55 AM,01/13/22 12:47 PM,01/13/22 01:03 PM
+278,10279,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 07:00 AM,01/13/22 07:03 AM,01/13/22 07:29 AM,01/13/22 07:42 AM,01/13/22 07:51 AM
+279,10280,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 08:00 AM,01/13/22 08:00 AM,01/13/22 08:26 AM,01/13/22 08:39 AM,01/13/22 08:49 AM
+280,10281,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 09:00 AM,01/13/22 09:04 AM,01/13/22 09:28 AM,01/13/22 09:41 AM,01/13/22 09:50 AM
+281,10282,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 10:00 AM,01/13/22 10:01 AM,01/13/22 10:23 AM,01/13/22 10:35 AM,01/13/22 10:44 AM
+282,10283,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 11:00 AM,01/13/22 10:56 AM,01/13/22 11:23 AM,01/13/22 11:36 AM,01/13/22 11:45 AM
+283,10284,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 12:00 PM,01/13/22 11:49 AM,01/13/22 12:15 PM,01/13/22 12:30 PM,01/13/22 12:38 PM
+284,10285,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 01:00 PM,01/13/22 12:55 PM,01/13/22 01:22 PM,01/13/22 01:35 PM,01/13/22 01:46 PM
+285,10286,01/13/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/13/22 02:00 PM,01/13/22 01:50 PM,01/13/22 02:16 PM,01/13/22 02:30 PM,01/13/22 02:39 PM
+286,10287,01/13/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/13/22 07:00 AM,01/13/22 07:03 AM,01/13/22 07:37 AM,01/13/22 08:35 AM,01/13/22 08:52 AM
+287,10288,01/13/22,4,OBGYN,57460,Cervical biopsy,75,01/13/22 09:15 AM,01/13/22 09:28 AM,01/13/22 09:59 AM,01/13/22 10:18 AM,01/13/22 10:27 AM
+288,10289,01/13/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/13/22 10:45 AM,01/13/22 11:18 AM,01/13/22 11:53 AM,01/13/22 12:35 PM,01/13/22 12:47 PM
+289,10290,01/13/22,4,OBGYN,57460,Cervical biopsy,75,01/13/22 01:00 PM,01/13/22 01:39 PM,01/13/22 02:08 PM,01/13/22 02:30 PM,01/13/22 02:39 PM
+290,10291,01/13/22,5,Urology,55250,Vasectomy,60,01/13/22 07:00 AM,01/13/22 07:08 AM,01/13/22 07:34 AM,01/13/22 07:53 AM,01/13/22 08:03 AM
+291,10292,01/13/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/13/22 08:15 AM,01/13/22 08:39 AM,01/13/22 09:05 AM,01/13/22 09:32 AM,01/13/22 09:41 AM
+292,10293,01/13/22,5,Urology,52353,Cystourethroscopy,60,01/13/22 10:00 AM,01/13/22 10:56 AM,01/13/22 11:22 AM,01/13/22 11:41 AM,01/13/22 11:51 AM
+293,10294,01/13/22,5,Urology,55250,Vasectomy,60,01/13/22 11:15 AM,01/13/22 12:45 PM,01/13/22 01:13 PM,01/13/22 01:34 PM,01/13/22 01:43 PM
+294,10295,01/13/22,6,Plastic,15773,Liposuction,180,01/13/22 07:00 AM,01/13/22 07:28 AM,01/13/22 08:04 AM,01/13/22 09:35 AM,01/13/22 09:49 AM
+295,10296,01/13/22,6,Plastic,15773,Liposuction,180,01/13/22 10:15 AM,01/13/22 10:22 AM,01/13/22 10:59 AM,01/13/22 12:28 PM,01/13/22 12:43 PM
+296,10297,01/13/22,6,Plastic,30400,Rhinoplasty,120,01/13/22 01:30 PM,01/13/22 01:44 PM,01/13/22 02:18 PM,01/13/22 03:22 PM,01/13/22 03:36 PM
+297,10298,01/13/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/13/22 07:00 AM,01/13/22 07:10 AM,01/13/22 07:37 AM,01/13/22 07:56 AM,01/13/22 08:05 AM
+298,10299,01/13/22,7,Vascular,28820,"Digital amputation, metatarsophalangeal joint",60,01/13/22 08:15 AM,01/13/22 08:38 AM,01/13/22 09:05 AM,01/13/22 09:23 AM,01/13/22 09:32 AM
+299,10300,01/13/22,7,Vascular,36901,AV fistula,75,01/13/22 09:30 AM,01/13/22 10:20 AM,01/13/22 10:48 AM,01/13/22 11:39 AM,01/13/22 11:47 AM
+300,10301,01/13/22,7,Vascular,36901,AV fistula,75,01/13/22 11:00 AM,01/13/22 12:36 PM,01/13/22 01:03 PM,01/13/22 01:54 PM,01/13/22 02:04 PM
+301,10302,01/13/22,7,Vascular,36901,AV fistula,75,01/13/22 12:30 PM,01/13/22 02:34 PM,01/13/22 03:04 PM,01/13/22 03:57 PM,01/13/22 04:06 PM
+302,10303,01/13/22,8,General,43775,Sleeve gastrectomy,120,01/13/22 07:00 AM,01/13/22 07:06 AM,01/13/22 07:38 AM,01/13/22 08:40 AM,01/13/22 08:52 AM
+303,10304,01/13/22,8,General,43775,Sleeve gastrectomy,120,01/13/22 09:15 AM,01/13/22 09:50 AM,01/13/22 10:21 AM,01/13/22 11:21 AM,01/13/22 11:33 AM
+304,10305,01/13/22,8,General,47562,Laparoscopic cholecystectomy,90,01/13/22 11:30 AM,01/13/22 12:30 PM,01/13/22 01:03 PM,01/13/22 01:48 PM,01/13/22 02:00 PM
+305,10306,01/14/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/14/22 07:00 AM,01/14/22 07:06 AM,01/14/22 07:31 AM,01/14/22 08:29 AM,01/14/22 08:41 AM
+306,10307,01/14/22,1,Podiatry,28289,Hallux rigidus correction with cheilectomy,60,01/14/22 09:15 AM,01/14/22 09:53 AM,01/14/22 10:19 AM,01/14/22 10:48 AM,01/14/22 10:59 AM
+307,10308,01/14/22,1,Podiatry,28296,"Bunionectomy with distal osteotomy",120,01/14/22 10:30 AM,01/14/22 11:43 AM,01/14/22 12:08 PM,01/14/22 01:05 PM,01/14/22 01:17 PM
+308,10309,01/14/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/14/22 07:00 AM,01/14/22 07:15 AM,01/14/22 07:43 AM,01/14/22 08:26 AM,01/14/22 08:35 AM
+309,10310,01/14/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/14/22 08:15 AM,01/14/22 08:59 AM,01/14/22 09:27 AM,01/14/22 10:12 AM,01/14/22 10:21 AM
+310,10311,01/14/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/14/22 09:30 AM,01/14/22 10:48 AM,01/14/22 11:15 AM,01/14/22 12:00 PM,01/14/22 12:09 PM
+311,10312,01/14/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/14/22 10:45 AM,01/14/22 12:41 PM,01/14/22 01:07 PM,01/14/22 01:52 PM,01/14/22 02:01 PM
+312,10313,01/14/22,2,Orthopedics,29877,"Arthroscopy, knee, surgical",60,01/14/22 11:00 AM,01/14/22 02:30 PM,01/14/22 02:59 PM,01/14/22 03:42 PM,01/14/22 03:52 PM
+313,10314,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 07:00 AM,01/14/22 07:03 AM,01/14/22 07:29 AM,01/14/22 07:42 AM,01/14/22 07:51 AM
+314,10315,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 08:00 AM,01/14/22 08:00 AM,01/14/22 08:26 AM,01/14/22 08:39 AM,01/14/22 08:49 AM
+315,10316,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 09:00 AM,01/14/22 09:04 AM,01/14/22 09:28 AM,01/14/22 09:41 AM,01/14/22 09:50 AM
+316,10317,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 10:00 AM,01/14/22 10:01 AM,01/14/22 10:23 AM,01/14/22 10:35 AM,01/14/22 10:44 AM
+317,10318,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 11:00 AM,01/14/22 10:56 AM,01/14/22 11:23 AM,01/14/22 11:36 AM,01/14/22 11:45 AM
+318,10319,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 12:00 PM,01/14/22 11:49 AM,01/14/22 12:15 PM,01/14/22 12:30 PM,01/14/22 12:38 PM
+319,10320,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 01:00 PM,01/14/22 12:55 PM,01/14/22 01:22 PM,01/14/22 01:35 PM,01/14/22 01:46 PM
+320,10321,01/14/22,3,Ophthalmology,66982,Extracapsular cataract removal,45,01/14/22 02:00 PM,01/14/22 01:50 PM,01/14/22 02:16 PM,01/14/22 02:30 PM,01/14/22 02:39 PM
+321,10322,01/14/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/14/22 07:00 AM,01/14/22 07:03 AM,01/14/22 07:37 AM,01/14/22 08:35 AM,01/14/22 08:52 AM
+322,10323,01/14/22,4,OBGYN,57460,Cervical biopsy,75,01/14/22 09:15 AM,01/14/22 09:28 AM,01/14/22 09:59 AM,01/14/22 10:18 AM,01/14/22 10:27 AM
+323,10324,01/14/22,4,OBGYN,58562,"Hysterectomy, surgical",120,01/14/22 10:45 AM,01/14/22 11:18 AM,01/14/22 11:53 AM,01/14/22 12:35 PM,01/14/22 12:47 PM
+324,10325,01/14/22,4,OBGYN,57460,Cervical biopsy,75,01/14/22 01:00 PM,01/14/22 01:39 PM,01/14/22 02:08 PM,01/14/22 02:30 PM,01/14/22 02:39 PM
+325,10326,01/14/22,5,Urology,55250,Vasectomy,60,01/14/22 07:00 AM,01/14/22 07:08 AM,01/14/22 07:34 AM,01/14/22 07:53 AM,01/14/22 08:03 AM
+326,10327,01/14/22,5,Urology,55873,Cryosurgery of the prostate gland,90,01/14/22 08:15 AM,01/14/22 08:39 AM,01/14/22 09:05 AM,01/14/22 09:32 AM,01/14/22 09:41 AM`;

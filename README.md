@@ -38,10 +38,11 @@ https://jy-crnz.github.io/Surgery-Operation-Dashoard/
 
 
 ## 💡 How to Use
-1. Open the dashboard: The data loads automatically.
-2. View Top Performers: Click the "Top Performers" button (top right) to see a leaderboard of the most efficient surgeons.
-3. Filter Data: Use the "All Surgeons" dropdown or the Date Range pickers to drill down into specific records.
-4. Smart Search: Type in the Search Bar to instantly find procedures (e.g., "Knee", "Appendectomy").
-5. Sort Table: Click any Table Header (like Turnover ↕) to organize the data from highest to lowest.
-6. Export Reports: Click "Export CSV" to download the currently filtered view to your computer.
-7. Reset: Click "Clear" to instantly wipe all filters and view the full dataset again.
+1. **Open the dashboard:** The data loads automatically.
+2. **View Top Performers:** Click the "Top Performers" button (top right) to see a leaderboard of the most efficient surgeons.
+3. **Filter Data:** Use the "All Surgeons" dropdown or the Date Range pickers to drill down into specific records.
+4. **Filter by Procedure:** Use the "All Procedures" dropdown to instantly view specific surgery types (e.g., "Total Knee Arthroplasty").
+5. **Sort Table:** Click any Table Header (like Turnover ↕) to organize the data from highest to lowest.
+6. **Export Reports:** Click "Export CSV" to download the currently filtered view to your computer.
+7. **Reset:** Click "Clear Filters" to instantly wipe all filters and view the full dataset again.
+8. **View Deep Dive Stats:** Click on any of the three main cards (Turnover, Duration, or Total Cases) to reveal detailed analytics and insights.

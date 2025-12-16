@@ -34,6 +34,9 @@ https://jy-crnz.github.io/Surgery-Operation-Dashoard/
 <img width="1902" height="948" alt="image" src="https://github.com/user-attachments/assets/3dda9d6b-e42d-433b-97ed-40da990a31ec" />
 
 
+<img width="1919" height="951" alt="image" src="https://github.com/user-attachments/assets/64649a9b-e622-40f8-bbed-67134f378f46" />
+
+
 ## 💡 How to Use
 1. Open the dashboard: The data loads automatically.
 2. View Top Performers: Click the "Top Performers" button (top right) to see a leaderboard of the most efficient surgeons.

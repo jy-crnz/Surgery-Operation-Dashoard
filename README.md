@@ -31,7 +31,7 @@ https://jy-crnz.github.io/Surgery-Operation-Dashoard/
 * **Deployment:** GitHub Pages
 
 ## 📸 Screenshots
-<img width="1902" height="949" alt="image" src="https://github.com/user-attachments/assets/e0b402d3-f864-47ab-b24f-2bb9579a27d6" />
+<img width="1902" height="948" alt="image" src="https://github.com/user-attachments/assets/3dda9d6b-e42d-433b-97ed-40da990a31ec" />
 
 
 ## 💡 How to Use

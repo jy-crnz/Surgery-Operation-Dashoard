@@ -40,10 +40,14 @@ An interactive analytics dashboard designed to help hospital administrators and 
 ## 📸 Screenshots
 
 ### Dashboard Overview
-<img width="1902" alt="Dashboard Overview" src="https://github.com/user-attachments/assets/3dda9d6b-e42d-433b-97ed-40da990a31ec" />
+<img width="1905" height="951" alt="image" src="https://github.com/user-attachments/assets/2c3eaef1-44f1-43c6-a6b1-e5199d503247" />
+
+
+### Dark Theme Overview
+<img width="1906" height="950" alt="image" src="https://github.com/user-attachments/assets/a9427e59-98aa-4797-a2a0-e403809a4220" />
 
 ### Deep Dive Modals & Filters
-<img width="1919" alt="Modals and Filters" src="https://github.com/user-attachments/assets/64649a9b-e622-40f8-bbed-67134f378f46" />
+<img width="1920" height="947" alt="image" src="https://github.com/user-attachments/assets/14441b10-3032-47e7-931c-708feeddd1f7" />
 
 
 ## 💡 How to Use

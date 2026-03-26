@@ -3,7 +3,7 @@
 An interactive analytics dashboard designed to help hospital administrators and surgical managers track Operating Room performance. This tool visualizes key metrics such as **turnover times**, **surgery duration**, and **procedure volume**, with a focus on identifying service line efficiency.
 
 ## 🚀 Live Demo
-[**Click here to view the Live Dashboard**](https://jy-crnz.github.io/Surgery-Operation-Dashoard/)
+[**Click here to view the Live Dashboard**](https://jy-crnz.github.io/Surgery-Operation-Dashboard/)
 
 ## ✨ Key Features
 
